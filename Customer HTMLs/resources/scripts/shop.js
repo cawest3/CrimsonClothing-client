@@ -23,6 +23,7 @@ async function GetItems(){
         data.forEach((item) => {
             item = {
                 itemId: item.itemId,
+                itemImageSrc: item.itemImageSrc,
                 price: item.price,
                 size: item.size,
                 stock: item.stock,
@@ -50,7 +51,7 @@ function RenderItems(){
         innerHTML += `
             <div class="col">
             <div class="card shadow-sm">
-                <img src="${item.imageSrc}" class="bd-placeholder-img card-img-top" width="100%" height="225">
+                <img src="${item.itemImageSrc}" class="bd-placeholder-img card-img-top" width="100%" height="225">
                 <div class="card-body">
                 <p class="card-text">${item.description}</p>
                 <div class="d-flex justify-content-between align-items-center">
