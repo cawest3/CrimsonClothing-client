@@ -28,7 +28,8 @@ async function GetItems(){
                 size: item.size,
                 stock: item.stock,
                 value: item.value,
-                profit: item.profit
+                profit: item.profit,
+                inCart: item.inCart
             }
             item.unshift(item)
         })
@@ -72,6 +73,20 @@ function RenderItems(){
 
 
 function HandleAddToCartClick(itemId){
-    
+
+    let activeUser = JSON.parse(localStorage.getItem("activeUser"))
+
+    let addingItem = items.find((item) => item.itemId == itemId)
+    console.log(addingItem)
+
+    activeUser.cart += addingItem
+    console.log(activeUser.cart)
+    addingItem.stock = false
+    addingItem.inCart = true
+
+    console.log(activeUser)
+
+    //Add in Update Put for the Item
+
 }
 
