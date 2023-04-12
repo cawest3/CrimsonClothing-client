@@ -47,7 +47,7 @@ function editProfile(){
 }
 
 function updateUser(userId){
-    let putUserApiUrl = `https://localhost:7050/api/Customer/${userId}`
+    let putUserApiUrl
     fetch (putUserApiUrl, {
         method: "PUT",
         headers: {
@@ -55,12 +55,11 @@ function updateUser(userId){
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            userId: userId,
+            customerId: userId,
             username: email,
             password: activeUser.password,
             name: name,
             address: address,
-            deleted: song.deleted
         })
     })
     .then((response) =>{
