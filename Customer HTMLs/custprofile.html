@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="./resources/styles/custprofile.css">
 </head>
 
-<body>
+<body onload="handleOnLoad()">
     <header data-bs-theme="dark">
         <div class="collapse text-bg-dark" id="navbarHeader">
             <div class="container">
@@ -48,7 +48,7 @@
         <div class="user-info">
             <div>
                 <label>Name:</label>
-                <input id="name" type="text" value="John Doe" readonly>
+                <input id="name" type="text" value="" readonly>
             </div>
             <div>
                 <label>Email:</label>
@@ -63,7 +63,8 @@
         <button class="edit-btn" onclick="editProfile()">Edit Profile</button>
     </div>
 
-    <script src="script.js"></script>
+    <!-- <script src="script.js"></script> -->
+    <script src="./resources/scripts/custprofile.js"></script>
 </body>
 
 </html>
