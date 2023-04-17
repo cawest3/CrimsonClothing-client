@@ -35,7 +35,7 @@ async function GetItems(){
         })
         
         localStorage.clear()
-        localStorage.setItem('localSongs', JSON.stringify(items))
+        localStorage.setItem('localItems', JSON.stringify(items))
     }
     catch{
         console.log("error")
@@ -71,7 +71,6 @@ function RenderItems(){
     itemsContainer.innerHTML = innerHTML
 }
 
-
 function HandleAddToCartClick(itemId){
 
     let activeUser = JSON.parse(localStorage.getItem("activeUser"))
@@ -79,7 +78,7 @@ function HandleAddToCartClick(itemId){
     let addingItem = items.find((item) => item.itemId == itemId)
     console.log(addingItem)
 
-    activeUser.cart += addingItem
+    activeUser.cart += addingItem.itemId
     console.log(activeUser.cart)
     addingItem.stock = false
     addingItem.inCart = true
@@ -87,6 +86,44 @@ function HandleAddToCartClick(itemId){
     console.log(activeUser)
 
     //Add in Update Put for the Item
+    fetch(`${ItemUrl}/${addingItem.itemId}`, {
+        method: "PUT",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(addingItem),
+    }).then((response) => {
+
+            console.log(response);
+            location.reload()
+            location.reload()
+
+        }).catch((error) => {
+
+            console.log(error);
+
+        });
+
+    //add update for user
+    fetch(`${CustomerUrl}/${activeUser.customerId}`, {
+        method: "PUT",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(activeUser),
+    }).then((response) => {
+
+            console.log(response);
+            location.reload()
+            location.reload()
+
+        }).catch((error) => {
+
+            console.log(error);
+
+        });
 
 }
 
