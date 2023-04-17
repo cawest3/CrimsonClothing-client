@@ -1,0 +1,108 @@
+/* custcreate.css */
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f7f7f7;
+}
+
+.navbar {
+    padding: 0.5rem 1rem;
+}
+
+.navbar-brand {
+    font-weight: 600;
+}
+
+.nav-link {
+    font-weight: 500;
+}
+
+.container {
+    max-width: 800px;
+    margin: 7rem auto;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+form {
+    max-width: 450px;
+    width: 100%;
+}
+
+h1 {
+    text-align: center;
+    font-size: 2.3rem;
+    font-weight: 600;
+    margin-bottom: 0 rem; 
+}
+
+
+.social-container {
+    margin-bottom: 0rem;
+}
+
+.proceed {
+    position: relative;
+}
+
+.proceed button {
+    padding: 0.75rem 2rem;
+}
+
+.proceed .fa-long-arrow-right {
+    margin-left: 0.5rem;
+}
+
+.overlay-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.overlay {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.overlay-panel {
+    max-width: 400px;
+    padding: 1.5rem;
+    text-align: center;
+    color: #fff;
+}
+
+.overlay-right {
+    text-align: left;
+}
+
+.overlay-right h1 {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.overlay-right p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin-top: 4rem;
+    }
+
+    .overlay-container {
+        display: none;
+    }
+}
