@@ -8,7 +8,7 @@ async function AddAnotherItem()
     
     const type =
     {
-       Shirt: "",
+        Shirt: "",
         Pant : "",
         Skirt : "",
         Dress : "",
