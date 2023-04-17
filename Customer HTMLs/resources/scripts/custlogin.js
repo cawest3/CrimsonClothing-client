@@ -5,6 +5,19 @@ async function handleOnCustLogin()
     GetCustLogins()
 }
  
+function login() {
+    var username = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
+  
+    // Replace the following hardcoded values with your own authentication logic
+    if (username === "myusername" && password === "mypassword") {
+      alert("Login successful!");
+    } else {
+      alert("Invalid username or password");
+    }
+  }
+  
+
 async function GetCustLogins()
 {
     try{
