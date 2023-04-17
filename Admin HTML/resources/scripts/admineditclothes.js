@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function () {
   document.addEventListener('click', function (event) {
     if (event.target.matches('.edit-item-btn')) {
       // Edit button functionality
-      // ...
     } else if (event.target.matches('.delete-item-btn')) {
       // Delete button functionality
       const itemId = event.target.dataset.itemId;
