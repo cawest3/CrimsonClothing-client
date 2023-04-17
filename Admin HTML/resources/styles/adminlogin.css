@@ -10,6 +10,14 @@
 	min-height: 480px;
 }
 
+.log-in-container form h1 {
+    margin-bottom: -3rem;
+}
+.log-in-container form span {
+    display: block;
+    margin-bottom: -2rem;
+}
+
 
 
 
