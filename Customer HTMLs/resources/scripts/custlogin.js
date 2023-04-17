@@ -3,6 +3,40 @@ const custUrl = "";
 async function handleOnCustLogin() {
   await GetCustLogins();
 }
+ 
+function login() {
+    var username = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
+  
+    // Replace the following hardcoded values with your own authentication logic
+    if (username === "myusername" && password === "mypassword") {
+      alert("Login successful!");
+    } else {
+      alert("Invalid username or password");
+    }
+  }
+  
+
+async function GetCustLogins()
+{
+    try{
+        const response = await fetch(custUrl)
+        const data = await response.json()
+        custLogins = []
+        data.forEach((cLogin) => {
+            cLogin = {
+                username: cLogin.username,
+                password: cLogin.password,
+                }
+                cLogin.unshift(cLogin)
+            })
+            
+            localStorage.clear()
+            localStorage.setItem('customerLogins', JSON.stringify(custLogins))
+        }
+        catch{
+            console.log("error")
+        }
 
 async function GetCustLogins() {
   try {
@@ -46,5 +80,4 @@ document.getElementById("login-form").addEventListener("submit", async function 
     alert("Invalid email or password. Please try again.");
   }
 });
-
-handleOnCustLogin();
+}
