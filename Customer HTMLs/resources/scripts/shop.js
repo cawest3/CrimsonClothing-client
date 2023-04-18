@@ -1,14 +1,8 @@
-// Item (price, size, stock, value, profit) 
-// Consignment (user, price, cost) 
-// Transaction (user, profit) 
-// Admin(username, password)  
-// Customer(username, password, storecredit) 
-
-let itemUrl = ""
-let consignmentUrl = ""
-let transactionUrl = ""
-let adminUrl = ""
-let customerUrl = ""
+let itemUrl = "http://localhost:5165/item"
+let consignmentUrl = "http://localhost:5165/consignment"
+let transactionUrl = "http://localhost:5165/transaction"
+let adminUrl = "http://localhost:5165/admin"
+let customerUrl = "http://localhost:5165/customer"
 
 function HandleOnLoad(){
     GetItem()
@@ -47,6 +41,9 @@ function RenderItems(){
     let innerHTML = ""
     //item.image src
     
+    //do fetch for image src and display
+
+
     items.forEach((item) => {
         if (item.stock = true) {
         innerHTML += `

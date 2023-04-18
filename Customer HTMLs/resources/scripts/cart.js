@@ -1,8 +1,8 @@
-let itemUrl = ""
-let consignmentUrl = ""
-let transactionUrl = ""
-let adminUrl = ""
-let customerUrl = ""
+let itemUrl = "http://localhost:5165/item"
+let consignmentUrl = "http://localhost:5165/consignment"
+let transactionUrl = "http://localhost:5165/transaction"
+let adminUrl = "http://localhost:5165/admin"
+let customerUrl = "http://localhost:5165/customer"
 let checkoutCart = []
 let transactionProfit
 
@@ -15,7 +15,6 @@ function SetUpUser(){
         password: activeUser.password,
         cart: activeUser.cart
     }
-
     
 }
 
