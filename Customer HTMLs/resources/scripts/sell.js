@@ -8,13 +8,13 @@ async function AddAnotherItem()
     
     const type =
     {
-        Shirt: "",
-        Pant : "",
-        Skirt : "",
-        Dress : "",
-        Jacket : "",
-        Shoes : "",
-        Belt : "",
+        shirt: "",
+        pants : "",
+        skirts : "",
+        dresses : "",
+        jackets : "",
+        shoes : "",
+        belts : "",
     }
     const typeDropdown = document.getElementById("typeDropdown")
     
@@ -68,7 +68,32 @@ async function AddAnotherItem()
 }
 
 
+function CalculateConsigment()
+{
+    // Define the prices per item
+    const pricePerItem = 
+    {
+        shirt: 5,
+        pants : 5,
+        skirts : 5,
+        dresses : 7,
+        jackets : 10,
+        shoes : 10,
+        belts : 7,
+    };
 
+    // get values from submit info
+    
+  // Calculate the total cost of the consignment
+    let totalCost = 0;
+    for (const item in consignment) 
+    {
+        totalCost += pricePerItem[item] * consignment[item];
+    }
+  
+  // Print the total cost
+  console.log(`The total cost of the consignment is: ${totalCost}`);
+}
 // var form = document.getElementById("sellForm");
 
 // document.getElementById("sellForm").addEventListener("click", function () {
