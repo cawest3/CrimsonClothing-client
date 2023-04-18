@@ -1,5 +1,5 @@
 body{
-  background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+  background: -webkit-linear-gradient(left, #cc0000, #6137378d);
 }
 .emp-profile{
   padding: 3%;
@@ -65,7 +65,7 @@ body{
 }
 .profile-head .nav-tabs .nav-link.active{
   border: none;
-  border-bottom:2px solid #0062cc;
+  border-bottom:2px solid #cc0000;
 }
 .profile-work{
   padding: 14%;
@@ -91,5 +91,5 @@ body{
 }
 .profile-tab p{
   font-weight: 600;
-  color: #0062cc;
+  color: #cc0000;
 }
