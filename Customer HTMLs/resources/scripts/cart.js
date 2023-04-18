@@ -6,9 +6,14 @@ let customerUrl = "http://localhost:5165/customer"
 let checkoutCart = []
 let transactionProfit
 let transaction 
-let transactions = JSON.parse(localStorage.getItem("transactions")) ? JSON.parse(localStorage.getItem('transactions')) : []
 
 let activeUser = JSON.parse(localStorage.getItem("activeUser"))
+
+
+function handleOnLoad(){
+    SetUpUser()
+    GetTransactions()
+}   
 
 function SetUpUser(){
     activeUser = {
@@ -42,9 +47,10 @@ async function GetTransactions(){
     }
 }
 
-transactions = JSON.parse(localStorage.getItem("transactions"))
-
 function HandleCheckCheckOutClick(){
+
+    let transactions = JSON.parse(localStorage.getItem("transactions")) ? JSON.parse(localStorage.getItem('transactions')) : []
+
     cart.forEach((item) => {
         item = {
                 itemId: item.itemId,
@@ -80,7 +86,6 @@ function HandleCheckCheckOutClick(){
 
     })
 
-
     transaction = {
         tranactionId: transactions.length + 1, 
         profit: transactionProfit,
@@ -109,20 +114,3 @@ function HandleCheckCheckOutClick(){
 
     //Put to update items and Put to update Transactions
 }
-
-//new transaction
-
-// function HandleAddToCartClick(itemId){
-
-//     let activeUser = JSON.parse(localStorage.getItem("activeUser"))
-
-//     let addingItem = items.find((item) => item.itemId == itemId)
-//     console.log(addingItem)
-
-//     activeUser.cart += addingItem
-//     console.log(activeUser.cart)
-//     addingItem.stock = false;
-
-//     console.log(activeUser)
-
-// }
