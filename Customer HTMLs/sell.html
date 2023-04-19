@@ -98,7 +98,22 @@
                 
                 <button onclick="AddAnotherItem()" type="submit" class="btn btn-primary">Add Another Item</button>
                 <button onclick="CalculateConsignment()" type="submit" class="btn btn-primary">Submit</button>
-            </form>   
+            </form>  
+            
+            <form>
+              <label for="shirt">Shirt:</label>
+              <input type="number" id="shirt" name="shirt" value="0"><br>
+            
+              <label for="pants">Pants:</label>
+              <input type="number" id="pants" name="pants" value="0"><br>
+            
+              <label for="shoes">Shoes:</label>
+              <input type="number" id="shoes" name="shoes" value="0"><br>
+            
+              <button type="button" onclick="calculateTotal()">Calculate Total</button>
+            </form>
+            
+            <p id="total"></p>
     </main>
     
     
