@@ -1,7 +1,12 @@
-const custUrl = "";
+let itemUrl = "http://localhost:5165/item"
+let consignmentUrl = "http://localhost:5165/consignment"
+let transactionUrl = "http://localhost:5165/transaction"
+let adminUrl = "http://localhost:5165/admin"
+let customerUrl = "http://localhost:5165/customer"
 
 async function handleOnCustLogin() {
   await GetCustLogins();
+  CustomerLogin();
 }
  
   
@@ -40,12 +45,12 @@ async function CustomerLogin(username, password)
   return false;
 }
 
-document.getElementById("login-form").addEventListener("submit", async function (event) {
-event.preventDefault();  // Prevent the form from submitting by default
+  document.getElementById("login-form").addEventListener("submit", async function (event) {
+  event.preventDefault();  // Prevent the form from submitting by default
 
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
-if (await CustomerLogin(email, password)) 
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  if (await CustomerLogin(email, password)) 
   {
     window.location.href = "./home.html"; // Redirect to the home page
   } 
@@ -55,15 +60,3 @@ if (await CustomerLogin(email, password))
   }
   });
 }
-
-// function login() {
-//   var username = document.getElementById("username").value;
-//   var password = document.getElementById("password").value;
-
-//   // Replace the following hardcoded values with your own authentication logic
-//   if (username === "myusername" && password === "mypassword") {
-//     alert("Login successful!");
-//   } else {
-//     alert("Invalid username or password");
-//   }
-// }

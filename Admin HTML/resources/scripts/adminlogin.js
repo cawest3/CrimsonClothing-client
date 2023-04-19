@@ -41,11 +41,11 @@ async function AdminLogin(username, password)
   return false;
 }
 
-document.getElementById("alogin-form").addEventListener("submit", async function (event) {
-event.preventDefault();  // Prevent the form from submitting by default
+  document.getElementById("alogin-form").addEventListener("submit", async function (event) {
+  event.preventDefault();  // Prevent the form from submitting by default
 
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 if (await AdminLogin(email, password)) 
   {
     window.location.href = "./home.html"; // Redirect to the home page

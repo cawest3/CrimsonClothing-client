@@ -1,7 +1,46 @@
-async function SubmitSell()
+let itemUrl = "http://localhost:5165/item"
+let consignmentUrl = "http://localhost:5165/consignment"
+let transactionUrl = "http://localhost:5165/transaction"
+let adminUrl = "http://localhost:5165/admin"
+let customerUrl = "http://localhost:5165/customer"
+let items = []
+const pricePerItem= 
 {
-    console.log("hi there")
+    shirt: 5,
+    pants : 5,
+    skirts : 5,
+    dresses : 7,
+    jackets : 10,
+    shoes : 10,
+    belts : 7,
+};
+
+function HandleOnSellLoad()
+{
+    CalculateConsignment();
+     AddAnotherItem();
 }
+function CalculateConsignment()
+{
+    // Define the prices per item
+   
+    document.getElementById("submitButton").addEventListener("click", function(e) {
+        e.preventDefault(); // prevent the default form submission
+
+        // Calculate the total value of the consignment
+        let totalCost = 0;
+        items.forEach(function(item) 
+        {
+          totalCost += item.quantity * item.pricePerItem;
+        }); 
+
+        alert("The total value of the consignment is $" + totalCost.toFixed(2));
+     });   
+  // Calculate the total cost of the consignment
+   
+    
+}
+
 
 async function AddAnotherItem()
 {
@@ -68,32 +107,8 @@ async function AddAnotherItem()
 }
 
 
-function CalculateConsigment()
-{
-    // Define the prices per item
-    const pricePerItem = 
-    {
-        shirt: 5,
-        pants : 5,
-        skirts : 5,
-        dresses : 7,
-        jackets : 10,
-        shoes : 10,
-        belts : 7,
-    };
 
-    // get values from submit info
-    
-  // Calculate the total cost of the consignment
-    let totalCost = 0;
-    for (const item in consignment) 
-    {
-        totalCost += pricePerItem[item] * consignment[item];
-    }
-  
-  // Print the total cost
-  console.log(`The total cost of the consignment is: ${totalCost}`);
-}
+
 // var form = document.getElementById("sellForm");
 
 // document.getElementById("sellForm").addEventListener("click", function () {
