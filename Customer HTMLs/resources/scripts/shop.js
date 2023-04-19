@@ -42,7 +42,7 @@ function RenderItems(){
     let innerHTML = ""
     //item.image src
     
-    //do fetch for image src and display
+
 
 
     items.forEach((item) => {
@@ -124,4 +124,3 @@ function HandleAddToCartClick(itemId){
         });
 
 }
-

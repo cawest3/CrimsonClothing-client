@@ -8,62 +8,44 @@ let custLogins = JSON.parse(localStorage.getItem("customerLogins")) ? JSON.parse
 async function handleOnCustLogin() {
   GetCustLogins();
 }
-// public int customerId {get; set;}
-// public string username {get; set;} //this is email
-// public string custPassword {get; set;}
-// public decimal storeCredit {get; set;}
-// public string cart{get; set;}
-  
-async function GetCustLogins()
-{
-    try{
-        const response = await fetch(customerUrl)
-        const data = await response.json()
-        custLogins = []
-        data.forEach((cLogin) => {
-            cLogin = {
-                username: cLogin.username,
-                password: cLogin.custPassword,
-                }
-                cLogin.unshift(cLogin)
-            })
-            
-            localStorage.clear()
-            localStorage.setItem('customerLogins', JSON.stringify(custLogins))
-        }
-        catch{
-            console.log("error")
-        }
+ 
+async function GetCustLogins() {
+  try {
+    const response = await fetch(customerUrl);
+    const data = await response.json();
+    const custLogins = [];
+    data.forEach((cLogin) => {
+      cLogin = {
+        username: cLogin.username,
+        password: cLogin.password,
+      };
+      custLogins.push(cLogin); // Use push to add each object to the end of the array
+    });
+    localStorage.clear();
+    localStorage.setItem('customerLogins', JSON.stringify(custLogins));
+  } catch {
+    console.log("error");
+  }
+} // Add missing closing brace
 
-
-function CustomerLogin(username, password) 
-{
+async function CustomerLogin(username, password) {
   const custLogins = JSON.parse(localStorage.getItem("customerLogins"));
-  for (const cLogin of custLogins) 
-  {
-    if (cLogin.username === username && cLogin.password === password) 
-    {
+  for (const cLogin of custLogins) {
+    if (cLogin.username === username && cLogin.password === password) {
       return true;
     }
   }
   return false;
 }
 
-  function Submit()
-  {
-    document.getElementById("login-form").addEventListener("submit", async function (event) {
-    event.preventDefault();  // Prevent the form from submitting by default
-    console.log("hi");
+document.getElementById("login-form").addEventListener("submit", async function (event) {
+  event.preventDefault();  // Prevent the form from submitting by default
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
-  if (await CustomerLogin(email, password)) 
-  {
+  if (await CustomerLogin(email, password)) {
+    console.log("here")
     window.location.href = "./home.html"; // Redirect to the home page
-  } 
-  else 
-  {
+  } else {
     alert("Invalid email or password. Please try again.");
   }
-  });
-}
-}
+});

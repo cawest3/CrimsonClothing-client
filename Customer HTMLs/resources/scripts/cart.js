@@ -12,7 +12,6 @@ let activeUser = JSON.parse(localStorage.getItem("activeUser"))
 
 function handleOnLoad(){
     SetUpUser()
-    GetTransactions()
 }   
 
 function SetUpUser(){
@@ -23,28 +22,6 @@ function SetUpUser(){
         cart: activeUser.cart
     }
     
-}
-
-async function GetTransactions(){
-    try{
-        const response = await fetch(transactionUrl)
-        const data = await response.json()
-        transaction = []
-        data.forEach((transaction) => {
-            transaction = {
-                transactionId: transaction.tranactionId,
-                profit: transaction.profit,
-                customerId: transaction.customerId,
-            }
-            transactions.unshift(transaction)
-        })
-        
-        localStorage.clear()
-        localStorage.setItem('localItems', JSON.stringify(transactions))
-    }
-    catch{
-        console.log("error")
-    }
 }
 
 function HandleCheckCheckOutClick(){
@@ -87,7 +64,6 @@ function HandleCheckCheckOutClick(){
     })
 
     transaction = {
-        tranactionId: transactions.length + 1, 
         profit: transactionProfit,
         customerId: activeUser.customerId
     }
@@ -166,4 +142,27 @@ function HandleCheckCheckOutClick(){
                 console.error("Error fetching cart items:", error);
             }
         }
-    }        
+    }  
+    
+    
+// async function GetTransactions(){
+//     try{
+//         const response = await fetch(transactionUrl)
+//         const data = await response.json()
+//         transaction = []
+//         data.forEach((transaction) => {
+//             transaction = {
+//                 transactionId: transaction.tranactionId,
+//                 profit: transaction.profit,
+//                 customerId: transaction.customerId,
+//             }
+//             transactions.unshift(transaction)
+//         })
+        
+//         localStorage.clear()
+//         localStorage.setItem('localItems', JSON.stringify(transactions))
+//     }
+//     catch{
+//         console.log("error")
+//     }
+// }
