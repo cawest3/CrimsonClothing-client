@@ -17,51 +17,95 @@ const pricePerItem=
 
 async function HandleOnSellLoad()
 {
-    CalculateConsignment();
+    calculateTotal();
     await AddAnotherItem();
 }
-function CalculateConsignment()
-{
-    // Define the prices per item
+
+function calculateTotal() {
+    // Get the form elements
     const shirtInput = document.getElementById('shirt');
-    const pantsInput = document.getElementById('pant');
-    const shoesInput = document.getElementById('shoe');
-    const skirtInput = document.getElementById('skirt');
-    const beltInput = document.getElementById('belt');
-    const jacketInput = document.getElementById('jacket');
-    const dressInput = document.getElementById('dress');
-console.log('hi')
+    const pantsInput = document.getElementById('pants');
+    const shoesInput = document.getElementById('shoes');
+  
     // Get the values from the form
     const shirtQuantity = parseInt(shirtInput.value);
     const pantsQuantity = parseInt(pantsInput.value);
     const shoesQuantity = parseInt(shoesInput.value);
-    const skirtQuantity = parseInt(skirtInput.value);
-    const beltQuantity = parseInt(beltInput.value);
-    const jacketQuantity = parseInt(jacketInput.value);
-    const dressQuantity = parseInt(dressInput.value);
+  
+    // Define the prices for each item
+    const pricePerItem = {
+      'shirt': 10,
+      'pants': 15,
+      'shoes': 20,
+    };
+  
+    // Create an array of the consignment items
+    const consignment = [
+      { item: 'shirt', quantity: shirtQuantity },
+      { item: 'pants', quantity: pantsQuantity },
+      { item: 'shoes', quantity: shoesQuantity },
+    ];
+  
+    // Calculate the total cost of the consignment
+    let totalCost = 0;
+    for (let item of consignment) {
+      const price = pricePerItem[item.item];
+      const quantity = item.quantity;
+      totalCost += price * quantity;
+    }
+  
+    // Display the total cost on the page
+    const totalElement = document.getElementById('total');
+    totalElement.innerHTML = 'Total cost: $' + totalCost;
+  }
+  
+
+
+// function CalculateConsignment()
+// {
+//     // Define the prices per item
+
+//     const typeInput = documeent.getElementById('shirt')
+//     const 
+//     const shirtInput = document.getElementById('shirt');
+//     const pantsInput = document.getElementById('pant');
+//     const shoesInput = document.getElementById('shoe');
+//     const skirtInput = document.getElementById('skirt');
+//     const beltInput = document.getElementById('belt');
+//     const jacketInput = document.getElementById('jacket');
+//     const dressInput = document.getElementById('dress');
+
+//     // Get the values from the form
+//     const shirtQuantity = shirtInput.value;
+//     const pantsQuantity = parseInt(pantsInput.value);
+//     const shoesQuantity = parseInt(shoesInput.value);
+//     const skirtQuantity = parseInt(skirtInput.value);
+//     const beltQuantity = parseInt(beltInput.value);
+//     const jacketQuantity = parseInt(jacketInput.value);
+//     const dressQuantity = parseInt(dressInput.value);
     
-    const consignment= [
-        {item:'shirt', quantity: shirtQuantity},
-        {item:'pant', quantity: pantsQuantity},
-        {item:'shoe', quantity: shoesQuantity},
-        {item:'skirt', quantity: skirtQuantity},
-        {item:'belt', quantity: beltQuantity},
-        {item:'jacket', quantity: jacketQuantity},
-        {item:'dress', quantity: dressQuantity},
-     ]   
-     // Calculate the total value of the consignment
-        let totalCost = 0;
-        for(let item of consignment)
-        {
-            const price = pricePerItem[item.item];
-            const quantity = item.quantity;
+//     const consignment= [
+//         {item:'shirt', quantity: shirtQuantity},
+//         {item:'pant', quantity: pantsQuantity},
+//         {item:'shoe', quantity: shoesQuantity},
+//         {item:'skirt', quantity: skirtQuantity},
+//         {item:'belt', quantity: beltQuantity},
+//         {item:'jacket', quantity: jacketQuantity},
+//         {item:'dress', quantity: dressQuantity},
+//      ]   
+//      // Calculate the total value of the consignment
+//         let totalCost = 0;
+//         for(let item of consignment)
+//         {
+//             const price = pricePerItem[item.item];
+//             const quantity = item.quantity;
             
-            totalCost += price * quantity;
-        }
+//             totalCost += price * quantity;
+//         }
           
-        alert("The total value of the consignment is $" + totalCost.toFixed(2));
-  // Calculate the total cost of the consignment   
-}
+//         alert("The total value of the consignment is $" + totalCost.toFixed(2));
+//   // Calculate the total cost of the consignment   
+// }
 
 async function AddAnotherItem()
 {
