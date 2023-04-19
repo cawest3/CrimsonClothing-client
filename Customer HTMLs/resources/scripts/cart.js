@@ -5,8 +5,15 @@ let adminUrl = "http://localhost:5165/admin"
 let customerUrl = "http://localhost:5165/customer"
 let checkoutCart = []
 let transactionProfit
+let transaction 
 
 let activeUser = JSON.parse(localStorage.getItem("activeUser"))
+
+
+function handleOnLoad(){
+    SetUpUser()
+    GetTransactions()
+}   
 
 function SetUpUser(){
     activeUser = {
@@ -18,7 +25,32 @@ function SetUpUser(){
     
 }
 
+async function GetTransactions(){
+    try{
+        const response = await fetch(transactionUrl)
+        const data = await response.json()
+        transaction = []
+        data.forEach((transaction) => {
+            transaction = {
+                transactionId: transaction.tranactionId,
+                profit: transaction.profit,
+                customerId: transaction.customerId,
+            }
+            transactions.unshift(transaction)
+        })
+        
+        localStorage.clear()
+        localStorage.setItem('localItems', JSON.stringify(transactions))
+    }
+    catch{
+        console.log("error")
+    }
+}
+
 function HandleCheckCheckOutClick(){
+
+    let transactions = JSON.parse(localStorage.getItem("transactions")) ? JSON.parse(localStorage.getItem('transactions')) : []
+
     cart.forEach((item) => {
         item = {
                 itemId: item.itemId,
@@ -30,25 +62,55 @@ function HandleCheckCheckOutClick(){
                 profit: item.profit,
                 inCart: true
         }
+
+        fetch(`${itemUrl}, ${item.itemId}`, {
+            method: "PUT",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(item, item.itemId),
+        }).then((response) => {
+    
+                console.log(response);
+                location.reload()
+                location.reload()
+    
+            }).catch((error) => {
+    
+                console.log(error);
+    
+            });
+
         transactionProfit += item.price
+
     })
+
+    transaction = {
+        tranactionId: transactions.length + 1, 
+        profit: transactionProfit,
+        customerId: activeUser.customerId
+    }
+
+    fetch(`${transactionUrl}`, {
+        method: "POST",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(transaction),
+    }).then((response) => {
+
+            console.log(response);
+            location.reload()
+            location.reload()
+
+        }).catch((error) => {
+
+            console.log(error);
+
+        });
+
 
     //Put to update items and Put to update Transactions
 }
-
-//new transaction
-
-// function HandleAddToCartClick(itemId){
-
-//     let activeUser = JSON.parse(localStorage.getItem("activeUser"))
-
-//     let addingItem = items.find((item) => item.itemId == itemId)
-//     console.log(addingItem)
-
-//     activeUser.cart += addingItem
-//     console.log(activeUser.cart)
-//     addingItem.stock = false;
-
-//     console.log(activeUser)
-
-// }

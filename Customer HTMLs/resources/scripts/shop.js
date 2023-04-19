@@ -3,9 +3,10 @@ let consignmentUrl = "http://localhost:5165/consignment"
 let transactionUrl = "http://localhost:5165/transaction"
 let adminUrl = "http://localhost:5165/admin"
 let customerUrl = "http://localhost:5165/customer"
+let items = JSON.parse(localStorage.getItem("items")) ? JSON.parse(localStorage.getItem('items')) : []
 
 function HandleOnLoad(){
-    GetItem()
+    GetItems()
     RenderItems()
 }
 
@@ -25,7 +26,7 @@ async function GetItems(){
                 profit: item.profit,
                 inCart: item.inCart
             }
-            item.unshift(item)
+            items.unshift(item)
         })
         
         localStorage.clear()
