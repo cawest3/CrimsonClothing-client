@@ -9,7 +9,7 @@
     <title>Crimson Clothing</title>
 </head>
 <body>
-    <body>
+    <body onload= HandleOnSellLoad()>
         <header data-bs-theme="dark">
             <div class="collapse text-bg-dark" id="navbarHeader">
               <div class="container">
@@ -74,15 +74,15 @@
                   <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                 </div>
                 <div class="form-group">
-                    <label for="typeFormControlSelect1">Type of Item</label>
-                    <select class="form-control" id="typeFormControlSelect1">
-                      <option>Shirt</option>
-                      <option>Pant</option>
-                      <option>Skirt</option>
-                      <option>Dress</option>
-                      <option>Jackets</option>
-                      <option>Shoes</option>
-                      <option>Belts</option>
+                    <label for="typeFormControlSelect1" >Type of Item</label>
+                    <select class="form-control" id="itemType">
+                      <option id="shirt">shirt</option>
+                      <option id="pant">pant</option>
+                      <option id="skirt">skirt</option>
+                      <option id="dress">dress</option>
+                      <option id="jacket">jackets</option>
+                      <option id="shoe">shoes</option>
+                      <option id="belt" >belts</option>
                     </select>
                   </div>
                   <div class="form-group">
@@ -97,17 +97,14 @@
                 
                 
                 <button onclick="AddAnotherItem()" type="submit" class="btn btn-primary">Add Another Item</button>
-                <button onclick="SubmitSell()" type="submit" class="btn btn-primary">Submit</button>
+                <button onclick="CalculateConsignment()" type="submit" class="btn btn-primary">Submit</button>
             </form>   
     </main>
     
     
-        <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+      
     
-    
-        
-        <script src="./resources/scripts/sell.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="./resources/scripts/sell.js"></script>
     </body>
     </html>
 
