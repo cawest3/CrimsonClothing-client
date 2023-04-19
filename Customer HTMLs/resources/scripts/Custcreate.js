@@ -1,51 +1,48 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.querySelector('form');
-    const signInLink = document.querySelector('a[href="#"]');
-    const usernameInput = document.querySelector('input[placeholder="Username"]');
-    const firstNameInput = document.querySelector('input[placeholder="First name"]');
-    const lastNameInput = document.querySelector('input[placeholder="Last name"]');
-    const emailInput = document.querySelector('input[placeholder="Email"]');
-    const createAccountButton = document.querySelector('.proceed button');
-    const termsCheckbox = document.querySelector('#flexCheckDefault');
-  
-    signInLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        // Redirect to the login page
-        window.location.href = './login.html';
-      });
-      
-      createAccountButton.addEventListener('click', (e) => {
-        e.preventDefault();
-      
-        if (validateForm()) {
-          // Submit the form or send the data to the server
-          console.log('Form submitted');
-          
-          // Redirect to the desired page after successful submission
-          window.location.href = "./login.html";
-        } else {
-          console.log('Form validation failed');
-        }
-      });
-      
-    function validateForm() {
-      const username = usernameInput.value.trim();
-      const firstName = firstNameInput.value.trim();
-      const lastName = lastNameInput.value.trim();
-      const email = emailInput.value.trim();
-      const termsAccepted = termsCheckbox.checked;
-  
-      if (!username || !firstName || !lastName || !email || !termsAccepted) {
-        alert('Please fill in all fields and accept the terms of service.');
-        return false;
-      }
-  
-      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      if (!emailRegex.test(email)) {
-        alert('Please enter a valid email address.');
-        return false;
-      }
-  
-      return true;
+let itemUrl = "http://localhost:5165/item";
+let consignmentUrl = "http://localhost:5165/consignment";
+let transactionUrl = "http://localhost:5165/transaction";
+let adminUrl = "http://localhost:5165/admin";
+let customerUrl = "http://localhost:5165/api/Customer";
+
+const registrationForm = document.getElementById("registration-form");
+registrationForm.addEventListener("submit", handleSubmit);
+
+async function handleSubmit(event) {
+  event.preventDefault();
+
+
+  const emailInput = event.target.querySelector('input[type="email"]');
+  const passwordInput = event.target.querySelector('input[type="password"]');
+  const custusername = emailInput.value;
+  const custPassword = passwordInput.value;
+  const storeCredit = 0;
+  const cart = ""
+
+  const newUser = {
+    custusername,
+    custPassword,
+    storeCredit,
+    cart
+
+  };
+
+  try {
+    const response = await fetch(customerUrl, {
+      method: "POST",
+      body: JSON.stringify(newUser),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      alert("Account created successfully!");
+      window.location.href = "./login.html";
+    } else {
+      alert("An error occurred. Please try again.");
     }
-  });
+  } catch (error) {
+    console.error("Error:", error);
+    alert("An error occurred. Please try again.");
+  }
+}

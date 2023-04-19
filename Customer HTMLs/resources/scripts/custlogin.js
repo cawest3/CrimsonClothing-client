@@ -13,7 +13,7 @@ async function handleOnCustLogin() {
 async function GetCustLogins()
 {
     try{
-        const response = await fetch(custUrl)
+        const response = await fetch(customerUrl)
         const data = await response.json()
         custLogins = []
         data.forEach((cLogin) => {
