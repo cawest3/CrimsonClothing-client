@@ -58,7 +58,7 @@ function CalculateConsignment()
             console.log(price)
             const quantity = item.quantity;
             console.log(quantity)
-            
+            //get quantity to work
             totalCost += price * 1;
         }
 
