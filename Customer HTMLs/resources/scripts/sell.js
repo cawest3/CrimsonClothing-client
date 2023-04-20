@@ -17,122 +17,82 @@ const pricePerItem=
 
 async function HandleOnSellLoad()
 {
-    calculateTotal();
-    await AddAnotherItem();
+    CalculateConsignment();
+    AddAnotherItem();
 }
 
-function calculateTotal() {
-    // Get the form elements
-    const shirtInput = document.getElementById('shirt');
-    const pantsInput = document.getElementById('pants');
-    const shoesInput = document.getElementById('shoes');
-  
-    // Get the values from the form
-    const shirtQuantity = parseInt(shirtInput.value);
-    const pantsQuantity = parseInt(pantsInput.value);
-    const shoesQuantity = parseInt(shoesInput.value);
-  
-    // Define the prices for each item
-    const pricePerItem = {
-      'shirt': 10,
-      'pants': 15,
-      'shoes': 20,
-    };
-  
-    // Create an array of the consignment items
-    const consignment = [
-      { item: 'shirt', quantity: shirtQuantity },
-      { item: 'pants', quantity: pantsQuantity },
-      { item: 'shoes', quantity: shoesQuantity },
-    ];
-  
-    // Calculate the total cost of the consignment
-    let totalCost = 0;
-    for (let item of consignment) {
-      const price = pricePerItem[item.item];
-      const quantity = item.quantity;
-      totalCost += price * quantity;
-    }
-  
-    // Display the total cost on the page
-    const totalElement = document.getElementById('total');
-    totalElement.innerHTML = 'Total cost: $' + totalCost;
-  }
-  
-
-
-// function CalculateConsignment()
-// {
-//     // Define the prices per item
-
-//     const typeInput = documeent.getElementById('shirt')
-//     const 
-//     const shirtInput = document.getElementById('shirt');
-//     const pantsInput = document.getElementById('pant');
-//     const shoesInput = document.getElementById('shoe');
-//     const skirtInput = document.getElementById('skirt');
-//     const beltInput = document.getElementById('belt');
-//     const jacketInput = document.getElementById('jacket');
-//     const dressInput = document.getElementById('dress');
-
-//     // Get the values from the form
-//     const shirtQuantity = shirtInput.value;
-//     const pantsQuantity = parseInt(pantsInput.value);
-//     const shoesQuantity = parseInt(shoesInput.value);
-//     const skirtQuantity = parseInt(skirtInput.value);
-//     const beltQuantity = parseInt(beltInput.value);
-//     const jacketQuantity = parseInt(jacketInput.value);
-//     const dressQuantity = parseInt(dressInput.value);
-    
-//     const consignment= [
-//         {item:'shirt', quantity: shirtQuantity},
-//         {item:'pant', quantity: pantsQuantity},
-//         {item:'shoe', quantity: shoesQuantity},
-//         {item:'skirt', quantity: skirtQuantity},
-//         {item:'belt', quantity: beltQuantity},
-//         {item:'jacket', quantity: jacketQuantity},
-//         {item:'dress', quantity: dressQuantity},
-//      ]   
-//      // Calculate the total value of the consignment
-//         let totalCost = 0;
-//         for(let item of consignment)
-//         {
-//             const price = pricePerItem[item.item];
-//             const quantity = item.quantity;
-            
-//             totalCost += price * quantity;
-//         }
-          
-//         alert("The total value of the consignment is $" + totalCost.toFixed(2));
-//   // Calculate the total cost of the consignment   
-// }
-
-async function AddAnotherItem()
+function CalculateConsignment()
 {
+    // Define the prices per item
+    const shirtInput = document.getElementById('shirt');
+    const pantsInput = document.getElementById('pant');
+    const shoesInput = document.getElementById('shoe');
+    const skirtInput = document.getElementById('skirt');
+    const beltInput = document.getElementById('belt');
+    const jacketInput = document.getElementById('jacket');
+    const dressInput = document.getElementById('dress');
+
+    // Get the values from the form
+    const shirtQuantity = shirtInput.value;
+    const pantsQuantity = pantsInput.value;
+    const shoesQuantity = shoesInput.value;
+    const skirtQuantity = skirtInput.value;
+    const beltQuantity = beltInput.value;
+    const jacketQuantity = jacketInput.value;
+    const dressQuantity = dressInput.value;
     
-    console.log("hi");
+    const consignment= [
+        {item:'shirt', quantity: shirtQuantity},
+        {item:'pant', quantity: pantsQuantity},
+        {item:'shoe', quantity: shoesQuantity},
+        {item:'skirt', quantity: skirtQuantity},
+        {item:'belt', quantity: beltQuantity},
+        {item:'jacket', quantity: jacketQuantity},
+        {item:'dress', quantity: dressQuantity},
+     ]   
+     // price will log to console, quantity will not work 
+        let totalCost = 0;
+        for(let item of consignment)
+        {
+            const price = pricePerItem[item.item];
+            console.log(price)
+            const quantity = item.quantity;
+            console.log(quantity)
+            
+            totalCost += price * 1;
+        }
+
+        
+        alert("The total value of the consignment is $" + totalCost.toFixed(2));
+  // Calculate the total cost of the consignment   
+}
+
+function AddAnotherItem()
+{
+    console.log('hi')
     const type =
     {
-        shirt: "",
-        pants : "",
-        skirts : "",
-        dresses : "",
-        jackets : "",
-        shoes : "",
-        belts : "",
+        'Shirt':'shirt',
+        'Pants' : 'pant',
+        'Skirts' : 'skirt',
+        'Dresses' : 'dress',
+        'Jackets' : 'jacket',
+        'Shoes' : 'shoes',
+        'Belt' : 'belt',
     }
-    const typeDropdown = document.getElementById("typeDropdown")
-    
-    let form = document.createElement('form')
-
-    for (let category in type)
-    {
+    document.addEventListener('DOMContentLoaded', function(){
+        const typeDropdown = document.getElementById('type-Dropdown')
+        let form = document.createElement('form')
+        
+        for (let category in type)
+        {
         let option = document.createElement("option")
         option.setAttribute('value', type[category])
-        let optionText = document.createTextNode(key)
+        let optionText = document.createTextNode(category)
         option.appendChild(optionText)
         typeDropdown.appendChild(option)
-    }
+        }
+   
 
     let textInput = document.createElement('input')
     textInput.type = 'text'
@@ -170,6 +130,7 @@ async function AddAnotherItem()
     
 
     app.appendChild(form)
+});
 }
 
 

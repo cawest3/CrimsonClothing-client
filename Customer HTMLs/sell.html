@@ -10,6 +10,7 @@
 </head>
 <body>
     <body onload= HandleOnSellLoad()>
+      <div id="app"></div>
         <header data-bs-theme="dark">
             <div class="collapse text-bg-dark" id="navbarHeader">
               <div class="container">
@@ -74,7 +75,7 @@
                   <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                 </div>
                 <div class="form-group">
-                    <label for="typeFormControlSelect1" >Type of Item</label>
+                    <label for="type-Dropdown" >Type of Item</label>
                     <select class="form-control" id="itemType">
                       <option id="shirt">shirt</option>
                       <option id="pant">pant</option>
@@ -99,21 +100,6 @@
                 <button onclick="AddAnotherItem()" type="submit" class="btn btn-primary">Add Another Item</button>
                 <button onclick="CalculateConsignment()" type="submit" class="btn btn-primary">Submit</button>
             </form>  
-            
-            <form>
-              <label for="shirt">Shirt:</label>
-              <input type="number" id="shirt" name="shirt" value="0"><br>
-            
-              <label for="pants">Pants:</label>
-              <input type="number" id="pants" name="pants" value="0"><br>
-            
-              <label for="shoes">Shoes:</label>
-              <input type="number" id="shoes" name="shoes" value="0"><br>
-            
-              <button type="button" onclick="calculateTotal()">Calculate Total</button>
-            </form>
-            
-            <p id="total"></p>
     </main>
     
     
