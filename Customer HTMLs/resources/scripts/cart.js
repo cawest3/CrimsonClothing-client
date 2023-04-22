@@ -12,6 +12,7 @@ let activeUser = JSON.parse(localStorage.getItem("activeUser"))
 
 function handleOnLoad(){
     SetUpUser()
+    loadCartItems()
 }   
 
 function SetUpUser(){
@@ -87,64 +88,60 @@ function HandleCheckCheckOutClick(){
 
         });
 
-        async function loadCartItems() {
-            const cartItemsContainer = document.querySelector(".col-lg-7");
-            const apiUrl = "http://localhost:5165/transaction"; // Replace with your API URL
         
-            let subtotal = 0;
-        
-            try {
-                const response = await fetch(apiUrl);
-                const cartItems = await response.json();
-        
-                cartItems.forEach((item) => {
-                    subtotal += item.price;
-                    const cartItemHtml = `
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    <div class="d-flex flex-row align-items-center">
-                                        <div>
-                                            <img src="${item.imageUrl}" class="img-fluid rounded-3" alt="Shopping item" style="width: 65px;">
-                                        </div>
-                                        <div class="ms-3">
-                                            <h5>${item.name}</h5>
-                                            <p class="small mb-0">${item.description}</p>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-row align-items-center">
-                                        <div style="width: 50px;">
-                                            <h5 class="fw-normal mb-0">${item.quantity}</h5>
-                                        </div>
-                                        <div style="width: 80px;">
-                                            <h5 class="mb-0">$${item.price}</h5>
-                                        </div>
-                                        <a href="#!" style="color: #ec1414;"><i class="fas fa-trash-alt"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-        
-                    cartItemsContainer.insertAdjacentHTML("beforeend", cartItemHtml);
-                });
-        
-                const subtotalHtml = `
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <p>Subtotal</p>
-                        <p class="mb-0">$${subtotal.toFixed(2)}</p>
-                    </div>
-                `;
-        
-                cartItemsContainer.insertAdjacentHTML("beforeend", subtotalHtml);
-        
-            } catch (error) {
-                console.error("Error fetching cart items:", error);
-            }
-        }
 }  
 
+async function loadCartItems() {
+    const cartItemsContainer = document.querySelector(".col-lg-7");
+    const apiUrl = "http://localhost:5165/transaction"; // Replace with your API URL
 
+    let subtotal = 0;
+
+    try {
+        const response = await fetch(apiUrl);
+        const cartItems = await response.json();
+
+        cartItems.forEach((item) => {
+            subtotal += item.price;
+            const cartItemHtml = `
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div class="d-flex flex-row align-items-center">
+                                <div>
+                                    <img src="${item.imageUrl}" class="img-fluid rounded-3" alt="Shopping item" style="width: 65px;">
+                                </div>
+                                <div class="ms-3">
+                                    <h5>${item.size}</h5>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-row align-items-center">
+                                <div style="width: 80px;">
+                                    <h5 class="mb-0">$${item.price}</h5>
+                                </div>
+                                <a href="#!" style="color: #ec1414;"><i class="fas fa-trash-alt"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            cartItemsContainer.insertAdjacentHTML("list", cartItemHtml);
+        });
+
+        const subtotalHtml = `
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <p>Subtotal</p>
+                <p class="mb-0">$${subtotal.toFixed(2)}</p>
+            </div>
+        `;
+
+        cartItemsContainer.insertAdjacentHTML("list", subtotalHtml);
+
+    } catch (error) {
+        console.error("Error fetching cart items:", error);
+    }
+}
    
     
 
