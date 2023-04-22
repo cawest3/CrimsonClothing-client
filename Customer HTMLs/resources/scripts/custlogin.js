@@ -30,9 +30,9 @@ async function handleSubmit(event) {
 
   const inputUsername = event.target.querySelector('input[name="email"]');
   const inputPassword = event.target.querySelector('input[name="password"]');
-  if (await CustomerLogin(inputUsername, inputPassword)) {
-    console.log("here")
-    window.location.href = "./home.html"; // Redirect to the home page
+  console.log('hi')
+  if (CustomerLogin(inputUsername, inputPassword)) {
+    window.location.href = './shop.html' // Redirect to the home page
   } else {
     alert("Invalid email or password. Please try again.");
   }
