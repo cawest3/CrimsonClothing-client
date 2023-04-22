@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head> 
@@ -50,7 +51,7 @@
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1 class="fw-light">Crimson Clothing Inventory</h1>
-        <p class="lead text-body-secondary">cards will be hardcoded through js and populate listings from the api</p>
+        <p>Click add to cart to add items to </p>
       </div>
     </div>
   </section>
@@ -58,7 +59,7 @@
   <div class="album py-5 bg-body-tertiary">
     <div class="container">
 
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      <div id="#items-container"class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <div class="col">
           <div class="card shadow-sm">
             <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Item Img</text></svg>
@@ -66,7 +67,7 @@
               <p class="card-text">Item Description</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Add To Cart</button>
+                  <button onclick="HandleAddToCartClick()" type="button" class="btn btn-sm btn-outline-secondary">Add To Cart</button>
                 </div>
                 <small class="text-body-secondary">Price</small>
               </div>

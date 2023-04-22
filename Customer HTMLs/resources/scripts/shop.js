@@ -1,14 +1,17 @@
-let itemUrl = "http://localhost:5165/item"
 let consignmentUrl = "http://localhost:5165/consignment"
 let transactionUrl = "http://localhost:5165/transaction"
 let adminUrl = "http://localhost:5165/admin"
 let customerUrl = "http://localhost:5165/Customer"
+let itemUrl = "http://localhost:5165/api/item"
 let items = JSON.parse(localStorage.getItem("items")) ? JSON.parse(localStorage.getItem('items')) : []
 
 function HandleOnLoad(){
     GetItems()
-    RenderItems()
+    document.addEventListener("DOMContentLoaded", ()=> {
+        RenderItems();
+    })
 }
+
 
 async function GetItems() {
     try {
@@ -27,11 +30,8 @@ async function GetItems() {
 function RenderItems(){
     let itemsContainer = document.querySelector("#items-container")
     let innerHTML = ""
-    //item.image src
+    console.log('hi')
     
-
-
-
     items.forEach((item) => {
         if (item.stock = true) {
         innerHTML += `
@@ -58,6 +58,7 @@ function RenderItems(){
 
 function HandleAddToCartClick(itemId){
 
+    console.log("made it to add to cart click")
     let activeUser = JSON.parse(localStorage.getItem("activeUser"))
 
     let addingItem = items.find((item) => item.itemId == itemId)
@@ -113,29 +114,3 @@ function HandleAddToCartClick(itemId){
 }
 
 
-// async function GetItems(){
-//     try{
-//         const response = await fetch(itemUrl)
-//         const data = await response.json()
-//         items = []
-//         data.forEach((item) => {
-//             item = {
-//                 itemId: item.itemId,
-//                 itemImageSrc: item.itemImageSrc,
-//                 price: item.price,
-//                 size: item.size,
-//                 stock: item.stock,
-//                 value: item.value,
-//                 profit: item.profit,
-//                 inCart: item.inCart
-//             }
-//             items.unshift(item)
-//         })
-        
-//         localStorage.clear()
-//         localStorage.setItem('localItems', JSON.stringify(items))
-//     }
-//     catch{
-//         console.log("error")
-//     }
-// }
