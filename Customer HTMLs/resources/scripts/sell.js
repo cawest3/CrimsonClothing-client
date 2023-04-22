@@ -2,7 +2,7 @@ let itemUrl = "http://localhost:5165/item"
 let consignmentUrl = "http://localhost:5165/consignment"
 let transactionUrl = "http://localhost:5165/transaction"
 let adminUrl = "http://localhost:5165/admin"
-let customerUrl = "http://localhost:5165/customer"
+let customerUrl = "http://localhost:5165/Customer"
 
 const pricePerItem= 
 {

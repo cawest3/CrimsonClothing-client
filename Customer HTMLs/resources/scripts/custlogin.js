@@ -5,7 +5,10 @@ let adminUrl = "http://localhost:5165/admin"
 let customerUrl = "http://localhost:5165/api/Customer"
 let custLogins = JSON.parse(localStorage.getItem("customerLogins")) ? JSON.parse(localStorage.getItem('customerLogins')) : []
 
-
+function HandleOnLoad()
+{
+  GetCustLogins();
+}
  
 async function GetCustLogins() {
   try {
