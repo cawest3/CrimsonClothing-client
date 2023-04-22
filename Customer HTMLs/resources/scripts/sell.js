@@ -33,13 +33,13 @@ function CalculateConsignment()
     const dressInput = document.getElementById('dress');
 
     // Get the values from the form
-    const shirtQuantity = shirtInput.value;
-    const pantsQuantity = pantsInput.value;
-    const shoesQuantity = shoesInput.value;
-    const skirtQuantity = skirtInput.value;
-    const beltQuantity = beltInput.value;
-    const jacketQuantity = jacketInput.value;
-    const dressQuantity = dressInput.value;
+    const shirtQuantity = Number(shirtInput.value);
+    const pantsQuantity = Number(pantsInput.value);
+    const shoesQuantity = Number(shoesInput.value);
+    const skirtQuantity = Number(skirtInput.value);
+    const beltQuantity = Number(beltInput.value);
+    const jacketQuantity = Number(jacketInput.value);
+    const dressQuantity = Number(dressInput.value);
     
     const consignment= [
         {item:'shirt', quantity: shirtQuantity},
