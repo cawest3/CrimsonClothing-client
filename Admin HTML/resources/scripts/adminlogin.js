@@ -7,6 +7,7 @@ let aLogins = JSON.parse(localStorage.getItem("adminLogins")) ? JSON.parse(local
 
 function HandleOnLoad() {
   GetAdminLogins();
+  console.log('repushing')
 }
 
 async function GetAdminLogins() {
