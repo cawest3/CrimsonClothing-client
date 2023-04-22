@@ -142,9 +142,14 @@ function HandleCheckCheckOutClick(){
                 console.error("Error fetching cart items:", error);
             }
         }
-    }  
+}  
+
+
+   
     
-    
+
+
+
 // async function GetTransactions(){
 //     try{
 //         const response = await fetch(transactionUrl)
