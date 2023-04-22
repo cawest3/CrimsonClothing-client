@@ -1,7 +1,7 @@
-let itemUrl = "http://localhost:5165/item"
+let itemUrl = "http://localhost:5165/api/item"
 let consignmentUrl = "http://localhost:5165/consignment"
 let transactionUrl = "http://localhost:5165/transaction"
-let adminUrl = "http://localhost:5165/admin"
+let adminUrl = "http://localhost:5165/api/admin"
 let customerUrl = "http://localhost:5165/api/Customer"
 let aLogins = JSON.parse(localStorage.getItem("adminLogins")) ? JSON.parse(localStorage.getItem('adminLogins')) : []
 

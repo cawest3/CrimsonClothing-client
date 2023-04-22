@@ -10,32 +10,19 @@ function HandleOnLoad(){
     RenderItems()
 }
 
-async function GetItems(){
-    try{
-        const response = await fetch(itemUrl)
-        const data = await response.json()
-        items = []
-        data.forEach((item) => {
-            item = {
-                itemId: item.itemId,
-                itemImageSrc: item.itemImageSrc,
-                price: item.price,
-                size: item.size,
-                stock: item.stock,
-                value: item.value,
-                profit: item.profit,
-                inCart: item.inCart
-            }
-            items.unshift(item)
-        })
-        
-        localStorage.clear()
-        localStorage.setItem('localItems', JSON.stringify(items))
+async function GetItems() {
+    try {
+      const response = await fetch(itemUrl);
+      const data = await response.json();
+      localStorage.clear();
+      localStorage.setItem('items', JSON.stringify(data));
+      console.log(data);
+    } catch {
+      console.log("error");
     }
-    catch{
-        console.log("error")
-    }
-}
+
+  } // Add missing closing brace
+
 
 function RenderItems(){
     let itemsContainer = document.querySelector("#items-container")
@@ -124,3 +111,31 @@ function HandleAddToCartClick(itemId){
         });
 
 }
+
+
+// async function GetItems(){
+//     try{
+//         const response = await fetch(itemUrl)
+//         const data = await response.json()
+//         items = []
+//         data.forEach((item) => {
+//             item = {
+//                 itemId: item.itemId,
+//                 itemImageSrc: item.itemImageSrc,
+//                 price: item.price,
+//                 size: item.size,
+//                 stock: item.stock,
+//                 value: item.value,
+//                 profit: item.profit,
+//                 inCart: item.inCart
+//             }
+//             items.unshift(item)
+//         })
+        
+//         localStorage.clear()
+//         localStorage.setItem('localItems', JSON.stringify(items))
+//     }
+//     catch{
+//         console.log("error")
+//     }
+// }
