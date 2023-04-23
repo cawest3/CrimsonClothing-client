@@ -63,7 +63,7 @@ function renderItems() {
 
 function handleAddToCartClick(itemId) {
   console.log("made it to add to cart click");
-  const activeUser = JSON.parse(localStorage.getItem("activeUser"));
+  // const activeUser = JSON.parse(localStorage.getItem("activeUser"));
   console.log(activeUser)
 
   const addingItem = items.find((item) => item.itemId === itemId);
