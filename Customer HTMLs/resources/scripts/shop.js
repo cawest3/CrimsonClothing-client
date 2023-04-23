@@ -76,7 +76,7 @@ function handleAddToCartClick(itemId) {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(addingItem),
+    body: JSON.stringify(addingItem, addingItem.itemId),
   })
     .then((response) => {
       console.log(response);

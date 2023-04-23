@@ -42,8 +42,8 @@ function renderItems() {
               <p class="card-text">${item.size}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary edit-item-btn" data-item-id="${item.itemId}">Edit Item</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary delete-item-btn" data-item-id="${item.itemId}">Delete Item</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary edit-item-btn" onclick="EditButton(${item.itemId})" data-item-id="${item.itemId}">Edit Item</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary delete-item-btn" onclick="DeleteButton(${item.itemId})" data-item-id="${item.itemId}">Delete Item</button>
                 </div>
                 <small class="text-body-secondary">$${item.price}</small>
               </div>
@@ -56,33 +56,71 @@ function renderItems() {
   itemsContainer.innerHTML = innerHTML;
 }
 
+function DeleteButton(itemId){
+  console.log("In Edit Button")
 
-  // Add click event listeners for edit and delete buttons
-  document.addEventListener('click', function (event) {
-    if (event.target.matches('.edit-item-btn')) {
-  // Edit button functionality
-      console.log("made it to add to edit inventory click");
-  //const activeUser = JSON.parse(localStorage.getItem("activeUser"));
-      const itemId = event.target.dataset.itemId;
-      const editingItem = items.find((item) => item.itemId === itemId);
-      console.log(editingItem);
-      //EditItem(itemId);
-    } else if (event.target.matches('.delete-item-btn')) {
-      // Delete button functionality
-      const itemId = event.target.dataset.itemId;
-      fetch(`${itemUrl}/${itemId}`, {
-        method: 'DELETE'
-      })
-        .then(response => {
-          if (response.ok) {
-            // Remove item card from DOM
-            //const itemCard = document.querySelector(`.item-card[data-item-id="${itemId}"]`);
-            //itemCard.parentElement.remove();
-            console.log('made it to end off delete')
-          }
-        });
-    }
-  });
+    let temp = items.find((item) => item.itemId == itemId)
+    console.log(temp)
+    temp.stock = false;
+
+    console.log(temp)
+
+    PutItem(temp, itemId)
+}
+
+function EditButton(itemId){
+  
+  //program modal 
+
+}
+
+function PutItem(item, id){
+
+  fetch(`${itemUrl}/${id}`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(item, id),
+  })
+    .then((response) => {
+      console.log(response);
+      location.reload();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+
+
+  // // Add click event listeners for edit and delete buttons
+  // document.addEventListener('click', function (event) {
+  //   if (event.target.matches('.edit-item-btn')) {
+  // // Edit button functionality
+  //     console.log("made it to add to edit inventory click");
+  // //const activeUser = JSON.parse(localStorage.getItem("activeUser"));
+  //     const itemId = event.target.dataset.itemId;
+  //     const editingItem = items.find((item) => item.itemId === itemId);
+  //     console.log(editingItem);
+  //     //EditItem(itemId);
+  //   } else if (event.target.matches('.delete-item-btn')) {
+  //     // Delete button functionality
+  //     const itemId = event.target.dataset.itemId;
+  //     fetch(`${itemUrl}/${itemId}`, {
+  //       method: 'DELETE'
+  //     })
+  //       .then(response => {
+  //         if (response.ok) {
+  //           // Remove item card from DOM
+  //           //const itemCard = document.querySelector(`.item-card[data-item-id="${itemId}"]`);
+  //           //itemCard.parentElement.remove();
+  //           console.log('made it to end off delete')
+  //         }
+  //       });
+  //   }
+  // });
 
 
 // function displayItems(items) {

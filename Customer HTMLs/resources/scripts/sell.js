@@ -60,6 +60,8 @@ function CalculateConsignment()
             console.log(quantity)
             //get quantity to work
             totalCost += price * 1;
+            console.log("Total cost")
+            console.log(tota)
         }
 
         
