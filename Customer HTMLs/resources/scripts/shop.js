@@ -10,6 +10,7 @@ let cart = [];
 
 function handleOnLoad() {
   let activeUser = JSON.parse(localStorage.getItem("activeUser"))
+  localStorage.setItem('activeUser', JSON.stringify(activeUser))
   console.log(activeUser)
   getItems().then(() => {
     console.log("In handle on load");
