@@ -4,7 +4,7 @@ let transactionUrl = "http://localhost:5165/transaction"
 let adminUrl = "http://localhost:5165/admin"
 let customerUrl = "http://localhost:5165/customer"
 let checkoutCart = []
-let transactionProfit
+let transactionProfit = 0;
 let transaction 
 
 let activeUser = JSON.parse(localStorage.getItem("activeUser"))
@@ -25,11 +25,12 @@ function SetUpUser(){
     
 }
 
+
 function HandleCheckCheckOutClick(){
 
     let transactions = JSON.parse(localStorage.getItem("transactions")) ? JSON.parse(localStorage.getItem('transactions')) : []
 
-    cart.forEach((item) => {
+    checkoutCart.forEach((item) => {
         item = {
                 itemId: item.itemId,
                 itemImageSrc: item.itemImageSrc,
@@ -94,6 +95,7 @@ function HandleCheckCheckOutClick(){
 async function loadCartItems() {
     const cartItemsContainer = document.querySelector(".col-lg-7");
     const apiUrl = "http://localhost:5165/transaction"; // Replace with your API URL
+    window.addEventListener('load', handleOnLoad);
 
     let subtotal = 0;
 
@@ -126,7 +128,7 @@ async function loadCartItems() {
                 </div>
             `;
 
-            cartItemsContainer.insertAdjacentHTML("list", cartItemHtml);
+            cartItemsContainer.insertAdjacentHTML("beforeend", cartItemHtml);
         });
 
         const subtotalHtml = `
@@ -136,7 +138,7 @@ async function loadCartItems() {
             </div>
         `;
 
-        cartItemsContainer.insertAdjacentHTML("list", subtotalHtml);
+        cartItemsContainer.insertAdjacentHTML("beforeend", subtotalHtml);
 
     } catch (error) {
         console.error("Error fetching cart items:", error);
