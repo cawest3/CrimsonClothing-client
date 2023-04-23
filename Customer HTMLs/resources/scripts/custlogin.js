@@ -33,6 +33,14 @@ async function handleSubmit(event) {
   console.log('hi')
   if (CustomerLogin(inputUsername, inputPassword)) {
     window.location.href = './shop.html' // Redirect to the home page
+
+    //Amanda's work delete if this doesn't work 
+    let customers = JSON.parse(localStorage.getItem("customerLogins")) || [];
+    let temp = customers.find((customer) => customer.custUsername == inputUsername);
+    console.log(temp);
+    localStorage.setItem('activeUser', JSON.stringify(temp));
+    //Amanda's work ending
+
   } else {
     alert("Invalid email or password. Please try again.");
   }
