@@ -75,14 +75,15 @@ function EditButton(itemId) {
   modal.classList.add('modal');
   document.body.appendChild(modal);
   
-  
+  let temp = items.find((item) => item.itemId == itemId)
+  console.log(temp)
   // Fetch the item data for the item with the specified ID
-  fetch(itemUrl)
+  // fetch(itemUrl)
     // .then(let temp = items.find((item) => item.itemid == itemid),
     // console.log(temp))
   //console.log(itemid)
-    .then(response => response.json())
-    .then(item => {
+    // .then(response => response.json())
+    // .then(temp=> {
       // Create a form element with input fields for each item property
       const form = document.createElement('form');
       form.innerHTML = `
@@ -93,19 +94,19 @@ function EditButton(itemId) {
         </div>
         <div class="modal-body">
           <label for="itemid">Item ID:</label>
-          <input type="text" id="itemid" name="itemid" value="${item.itemId}">
+          <input type="text" id="itemid" name="itemid" value="${temp.itemId}">
           <br>
           <label for="itemImageSrc">Item Image:</label>
-          <input type="text" id="itemImageSrc" name="itemImageSrc" value="${item.itemImageSrc}">
+          <input type="text" id="itemImageSrc" name="itemImageSrc" value="${temp.itemImageSrc}">
           <br>
           <label for="price">Price:</label>
-          <input type="text" id="price" name="price" value="${item.price}">
+          <input type="text" id="price" name="price" value="${temp.price}">
           <br>
           <label for="size">Size:</label>
-          <input type="text" id="size" name="size" value="${item.size}">
+          <input type="text" id="size" name="size" value="${temp.size}">
           <br>
           <label for="cost">Cost:</label>
-          <input type="text" id="cost" name="cost" value="${item.cost}">
+          <input type="text" id="cost" name="cost" value="${temp.cost}">
           <br>
         </div>
         <div class="modal-footer">
@@ -122,25 +123,26 @@ function EditButton(itemId) {
       form.addEventListener('submit', event => {
         event.preventDefault();
         const formData = new FormData(form);
+        let temp = updatedItem
         const updatedItem = {
-          itemId: item.itemId,
+          itemId: updatedItem.itemId,
           itemImageSrc: formData.get('itemImageSrc'),
           price: formData.get('price'),
           size: formData.get('size'),
           cost: formData.get('cost'),
           profit: formData.get('price') - formData.get('cost'),
-          consignmentid: item.consignmentid,
-          inCart: item.inCart,
-          stock: item.stock
+          consignmentid: updatedItem.consignmentid,
+          inCart: updatedItem.inCart,
+          stock: updatedItem.stock
         };
 
         // Update the item data on the server
-        fetch(`${itemUrl}/${itemId}`, {
+        fetch(`${itemUrl}/${temp.itemId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(updatedItem),
+          body: JSON.stringify(temp, temp.itemId),
         })
         .then(() => {
           // Remove the modal from the page
@@ -159,10 +161,10 @@ function EditButton(itemId) {
       
       // Show the modal
       modal.style.display = 'block';
-    })
-    .catch(error => {
-      console.error('Error fetching item:', error);
-    });
+    // })
+    // .catch(error => {
+    //   console.error('Error fetching item:', error);
+    // });
 }
 
 function closeModal() {
@@ -189,7 +191,10 @@ function PutItem(item, itemId){
     });
 }
 
+function AddItem()
+{
 
+}
 
   // // Add click event listeners for edit and delete buttons
   // document.addEventListener('click', function (event) {
