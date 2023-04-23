@@ -32,14 +32,17 @@ async function handleSubmit(event) {
   const inputPassword = event.target.querySelector('input[name="password"]');
   console.log('hi')
   if (CustomerLogin(inputUsername, inputPassword)) {
-    window.location.href = './shop.html' // Redirect to the home page
 
     //Amanda's work delete if this doesn't work 
-    let customers = JSON.parse(localStorage.getItem("customerLogins")) || [];
-    let temp = customers.find((customer) => customer.custUsername == inputUsername);
+    console.log(inputUsername.value)
+    let customers = JSON.parse(localStorage.getItem("customerLogins"));
+    console.log(customers)
+    let temp = customers.find((customer) => customer.custusername == inputUsername.value);
     console.log(temp);
     localStorage.setItem('activeUser', JSON.stringify(temp));
     //Amanda's work ending
+
+    window.location.href = './shop.html' // Redirect to the home page
 
   } else {
     alert("Invalid email or password. Please try again.");
