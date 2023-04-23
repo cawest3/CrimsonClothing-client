@@ -4,7 +4,6 @@
     <link rel="stylesheet" href="./resources/styles/custprofile.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="./resources/styles/custprofile.css">
     <title>Login Form Using HTML And CSS Only</title>
 </head>
 <body>
@@ -31,7 +30,7 @@
                         </ul>
         
                       </div>
-                </ul>
+                
               </div>
             </div>
           </div>
@@ -61,9 +60,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="profile-head">
-                                <h4>
-                                    Kshiti Ghelani
-                                </h4>
+                               
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
@@ -78,39 +75,34 @@
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
                 </div>
             </div>
                 <div class="col-md-8">
                     <div class="tab-content profile-tab" id="myTabContent">
-                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label>User Id</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p>Kshiti123</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label>Name</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p>Kshiti Ghelani</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label>Email</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p>kshitighelani@gmail.com</p>
-                                        </div>
-                                    </div>
-                                    </div>
-                                    <div class="row">
-                                    </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>User Id</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p id="userID"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Name</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p id="name"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Email</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p id="email"></p>
+                            </div>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -118,6 +110,5 @@
         </form>           
         </div>
 
-    
 
-    <script src="./resources/scripts/custlogin.js"
+    <script src="./resources/scripts/custprofile.js"></script>

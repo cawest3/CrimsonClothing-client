@@ -13,16 +13,24 @@ async function handleSubmit(event) {
 
   const emailInput = event.target.querySelector('input[type="email"]');
   const passwordInput = event.target.querySelector('input[type="password"]');
+  const customerId= 0;
+  const custFNameInput = event.target.querySelector('input[type="custFName"]');
+  const custLNameInput = event.target.querySelector('input[type="custLName"]');
   const custusername = emailInput.value;
   const custPassword = passwordInput.value;
+  const custFName = custFNameInput.value;
+  const custLName = custLNameInput.value;
   const storeCredit = 0;
-  const cart = ""
+  const cart = "";
 
   const newUser = {
+    customerId,
     custusername,
     custPassword,
     storeCredit,
-    cart
+    cart,
+    custFName,
+    custLName
 
   };
 

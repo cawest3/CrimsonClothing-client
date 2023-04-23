@@ -5,31 +5,30 @@
 
 let activeUser = JSON.parse(localStorage.getItem("activeUser"))
 
-function setUpUser(){
+
+function setUpUser() {
     activeUser = {
         userId: 1,
         name: 'Jonathan Gaming',
         email: 'jonathangaming@epic.com',
         address: "1234 Main Street, Mobile, AL 36609"
     }
-    return activeUser
+    return activeUser;
 }
 
-// let activeUser = {
-//     name: 'Jonathan Gaming',
-//     email: 'jonathangaming@epic.com',
-//     address: "1234 Main Street, Mobile, AL 36609"
-// }
-
-function handleOnLoad(){
-    setUpUser()
-    let name = document.getElementById("name")//needs to be added
-    name.value = activeUser.name
-    let email = document.getElementById("email")//or username, depending
-    email.value = activeUser.email
-    let address = document.getElementById("address")  //needs to be added
-    address.value = activeUser.address
+function handleOnLoad() {
+    setUpUser();
+    let userID = document.getElementById("customerId");
+    userID.innerText = activeUser.userId;
+    let name = document.getElementById("name");
+    name.innerText = activeUser.name;
+    let email = document.getElementById("custusername");
+    email.innerText = activeUser.email;
+    let address = document.getElementById("address");
+    address.innerText = activeUser.address;
 }
+
+document.addEventListener('DOMContentLoaded', handleOnLoad);
 
 function editProfile(){
     let currUserId = activeUser.userId
