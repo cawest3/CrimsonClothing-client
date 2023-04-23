@@ -41,7 +41,7 @@ function totalProfitReport(data){
         totalProfit += data.profit
     })
     console.log(totalProfit)
-    document.getElementById('totalProfit').innerHTML = totalProfit
+    document.getElementById('totalProfit').innerHTML = '$' + totalProfit
 }
 
 function totalItemsReport(data2){

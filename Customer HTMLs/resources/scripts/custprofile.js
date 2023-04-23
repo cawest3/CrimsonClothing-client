@@ -4,16 +4,18 @@
 //  Once double checked, make tables
 
 let activeUser = JSON.parse(localStorage.getItem("activeUser"))
+console.log(activeUser)
+// function setUpUser(){
+//     activeUser = {
+//         userId: 1,
+//         name: 'Jonathan Gaming',
+//         email: 'jonathangaming@epic.com',
+//         address: "1234 Main Street, Mobile, AL 36609"
+//     }
+//     return activeUser
+// }
 
-function setUpUser(){
-    activeUser = {
-        userId: 1,
-        name: 'Jonathan Gaming',
-        email: 'jonathangaming@epic.com',
-        address: "1234 Main Street, Mobile, AL 36609"
-    }
-    return activeUser
-}
+
 
 // let activeUser = {
 //     name: 'Jonathan Gaming',
