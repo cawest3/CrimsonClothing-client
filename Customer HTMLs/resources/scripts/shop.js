@@ -6,7 +6,11 @@ let itemUrl = "http://localhost:5165/api/item";
 let items = [];
 let cart = [];
 
+
+
 function handleOnLoad() {
+  let activeUser = JSON.parse(localStorage.getItem("activeUser"))
+  console.log(activeUser)
   getItems().then(() => {
     console.log("In handle on load");
     renderItems();
@@ -60,7 +64,7 @@ function renderItems() {
 function handleAddToCartClick(itemId) {
   console.log("made it to add to cart click");
   const activeUser = JSON.parse(localStorage.getItem("activeUser"));
-  console.log("activeuser")
+  console.log(activeUser)
 
   const addingItem = items.find((item) => item.itemId === itemId);
   console.log(addingItem);
