@@ -22,11 +22,11 @@ getInfo()
 async function getInfo(){
     let fName = activeUser.custFName
     let lName = activeUser.custLName
-    let storeCredit = activeUser.storeCredit
+    let storeCredit = '$' + activeUser.storeCredit
     let email = activeUser.custusername
-    document.getElementById('Name').innerHTML = fName + ' ' + lName
+    document.getElementById('Welcome').innerHTML = 'Welcome ' + fName + ' ' + lName + '!'
     document.getElementById('Email').innerHTML = email
-    // document.getElementById('storeCredit').innerHTML = storeCredit
+    document.getElementById('StoreCredit').innerHTML = storeCredit
     let orders = await getOrders()
     document.getElementById('Orders').innerHTML = orders
 }
