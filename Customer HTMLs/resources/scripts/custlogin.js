@@ -35,9 +35,9 @@ async function handleSubmit(event) {
     window.location.href = './shop.html' // Redirect to the home page
 
     //Amanda's work delete if this doesn't work 
-    custLogins = JSON.parse(localStorage.getItem("customerLogins")) ? JSON.parse(localStorage.getItem('customerLogins')) : []
-    let temp = custLogins.find((activeUser) => temp.custUsername == inputUsername)
-    console.log(temp)
+    let customers = JSON.parse(localStorage.getItem("customerLogins")) || [];
+    let temp = customers.find((customer) => customer.custUsername == inputUsername);
+    console.log(temp);
     localStorage.setItem('activeUser', JSON.stringify(temp));
     //Amanda's work ending
 
