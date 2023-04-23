@@ -57,7 +57,7 @@ function renderItems() {
 }
 
 function DeleteButton(itemId){
-  console.log("In Edit Button")
+  console.log("In Delete Button")
 
     let temp = items.find((item) => item.itemId == itemId)
     console.log(temp)
@@ -68,64 +68,86 @@ function DeleteButton(itemId){
     PutItem(temp, itemId)
 }
 
-function EditItem(itemid) {
+function EditButton(itemId) {
+  console.log('in edit button')
   // Create a modal element and add it to the page
   const modal = document.createElement('div');
   modal.classList.add('modal');
   document.body.appendChild(modal);
-
-  // Fetch the item data
-  fetch('api/items/' + itemid, { mode: 'no-cors' })
-    .then(response => response.text())
-    .then(data => {
-      const item = JSON.parse(data);
-      
+  
+  
+  // Fetch the item data for the item with the specified ID
+  fetch(itemUrl)
+    // .then(let temp = items.find((item) => item.itemid == itemid),
+    // console.log(temp))
+  //console.log(itemid)
+    .then(response => response.json())
+    .then(item => {
       // Create a form element with input fields for each item property
-      const form = document.createElement('edit-form');
+      const form = document.createElement('form');
       form.innerHTML = `
-        <label for="itemId">Item ID:</label>
-        <input type="text" id="itemid" name="itemid" value="${item.itemid}">
-        <br>
-        <label for="itemImageSrc">Item Image:</label>
-        <input type="text" id="itemImageSrc" name="itemImageSrc" value="${item.itemImageSrc}">
-        <br>
-        <label for="n">Price:</label>
-        <input type="text" id="price" name="price" value="${item.price}">
-        <br>
-        <label for="n">Price:</label>
-        <input type="text" id="price" name="price" value="${item.size}">
-        <br>
-        <label for="n">Price:</label>
-        <input type="text" id="price" name="price" value="${item.cost}">
-        <br>
-        <button type="submit">Save</button>
-      `;
-      debugger
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Item</h5>
+        </div>
+        <div class="modal-body">
+          <label for="itemid">Item ID:</label>
+          <input type="text" id="itemid" name="itemid" value="${item.itemId}">
+          <br>
+          <label for="itemImageSrc">Item Image:</label>
+          <input type="text" id="itemImageSrc" name="itemImageSrc" value="${item.itemImageSrc}">
+          <br>
+          <label for="price">Price:</label>
+          <input type="text" id="price" name="price" value="${item.price}">
+          <br>
+          <label for="size">Size:</label>
+          <input type="text" id="size" name="size" value="${item.size}">
+          <br>
+          <label for="cost">Cost:</label>
+          <input type="text" id="cost" name="cost" value="${item.cost}">
+          <br>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save Item</button>
+          <button onclick="closeModal()"type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+`;
+
+
       // Add a submit event listener to the form to update the item data
       form.addEventListener('submit', event => {
         event.preventDefault();
         const formData = new FormData(form);
         const updatedItem = {
-          name: formData.get('name'),
-          description: formData.get('description'),
-          price: formData.get('price')
+          itemId: item.itemId,
+          itemImageSrc: formData.get('itemImageSrc'),
+          price: formData.get('price'),
+          size: formData.get('size'),
+          cost: formData.get('cost'),
+          profit: formData.get('price') - formData.get('cost'),
+          consignmentid: item.consignmentid,
+          inCart: item.inCart,
+          stock: item.stock
         };
 
         // Update the item data on the server
-        fetch('api/items/' + itemid, {
+        fetch(`${itemUrl}/${itemId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(updatedItem),
-          mode: 'no-cors'
         })
         .then(() => {
           // Remove the modal from the page
-          document.body.removeChild(modal);
+          modal.remove();
           
           // Reload the page to see the updated item data
-          location.reload();
+          getItems().then;
         })
         .catch(error => {
           console.error('Error updating item:', error);
@@ -143,17 +165,20 @@ function EditItem(itemid) {
     });
 }
 
+function closeModal() {
+  const modal = document.querySelector('.modal');
+  modal.remove();
+}
 
+function PutItem(item, itemId){
 
-function PutItem(item, id){
-
-  fetch(`${itemUrl}/${id}`, {
+  fetch(`${itemUrl}/${itemId}`, {
     method: "PUT",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(item, id),
+    body: JSON.stringify(item, itemId),
   })
     .then((response) => {
       console.log(response);
