@@ -15,11 +15,6 @@ const pricePerItem=
     belt : 7,
 };
 
-async function HandleOnSellLoad()
-{
-    CalculateConsignment();
-    AddAnotherItem();
-}
 
 function CalculateConsignment()
 {
@@ -87,14 +82,14 @@ function AddAnotherItem()
         const typeDropdown = document.getElementById('type-Dropdown')
         let form = document.createElement('form')
         
-        for (let category in type)
-        {
-        let option = document.createElement("option")
-        option.setAttribute('value', type[category])
-        let optionText = document.createTextNode(category)
-        option.appendChild(optionText)
-        typeDropdown.appendChild(option)
-        }
+        // for (let category in type)
+        // {
+        // let option = document.createElement("option")
+        // option.setAttribute('value', type[category])
+        // let optionText = document.createTextNode(category)
+        // option.appendChild(optionText)
+        // typeDropdown.appendChild(option)
+        // }
    
 
     let textInput = document.createElement('input')
