@@ -182,6 +182,7 @@ function PutItemEdit(itemId, temp) {
     }
     console.log(`Item ${itemId} updated successfully.`);
     console.log('reload new items');
+    location.reload();
     closeModal();
   })
   .catch(error => {
@@ -189,10 +190,123 @@ function PutItemEdit(itemId, temp) {
   });
 }
 
-function AddItem(){
-  console.log('inside ')
+
+
+function AddItem() {
+  console.log('in add button')
+  // Create a modal element and add it to the page
+  const modal = document.createElement('div');
+  modal.classList.add('modal');
+  document.body.appendChild(modal);
   
+      const form = document.createElement('form');
+      form.innerHTML = `
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Item</h5>
+        </div>
+        <div class="modal-body">
+          <label for="name">Item Name:</label>
+          <input type="text" id="name" name="name" value="">
+          <br>
+          <label for="itemImageSrc">Item Image:</label>
+          <input type="text" id="itemImageSrc" name="itemImageSrc" value="">
+          <br>
+          <label for="price">Price:</label>
+          <input type="text" id="price" name="price" value="">
+          <br>
+          <label for="size">Size:</label>
+          <input type="text" id="size" name="size" value="">
+          <br>
+          <label for="cost">Cost:</label>
+          <input type="text" id="cost" name="cost" value="">
+          <br>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save Item</button>
+          <button onclick="closeModal()"type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+`;
+
+
+      // Add a submit event listener to the form to update the item data
+      form.addEventListener('submit', event => {
+        event.preventDefault();
+        
+        
+          // Get input values
+          const addItemName = document.getElementById("name").value;
+          const itemImage = document.getElementById("itemImageSrc").value;
+          const itemSize = document.getElementById("size").value;
+          const itemPrice = document.getElementById("price").value;
+          const itemCost = document.getElementById("cost").value;
+        
+          // Add new item to inventory
+          const newItem = { 
+            itemName: addItemName,  
+            itemImageSrc: itemImage,
+            price:itemPrice,
+            size: itemSize,
+            cost: itemCost,
+            profit: itemPrice - itemCost,
+            inCart: false,
+            stock: true,
+            consignmentId: 0
+          };
+          items.push(newItem);
+        
+          // Clear input fields
+          document.getElementById("name").value = "";
+          document.getElementById("itemImageSrc").value = "";
+          document.getElementById("size").value = "";
+          document.getElementById("price").value = "";
+          document.getElementById("cost").value = "";
+
+          console.log(newItem);
+        
+          // Close modal
+          closeAddModal();
+      
+        // Update the item data on the server
+          PutAddedItem(newItem);
+      });
+      
+      // Add the form to the modal
+      modal.appendChild(form);
+      
+      // Show the modal
+      modal.style.display = 'block';
 }
 
+function PutAddedItem(newItem) {
+  // Update the item with the specified ID on the server
+  fetch(itemUrl, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(newItem)
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    console.log(`Item ${itemId} updated successfully.`);
+    console.log('reload new items');
+    location.reload();
+    closeModal();
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+}
 
+function closeAddModal() {
+  const modal = document.querySelector('.modal');
+  modal.remove();
+}
   
