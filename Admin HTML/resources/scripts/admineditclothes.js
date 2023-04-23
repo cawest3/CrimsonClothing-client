@@ -1,7 +1,7 @@
-let consignmentUrl = "http://localhost:5165/consignment";
-let transactionUrl = "http://localhost:5165/transaction";
-let adminUrl = "http://localhost:5165/admin";
-let customerUrl = "http://localhost:5165/Customer";
+let consignmentUrl = "http://localhost:5165/api/consignment";
+let transactionUrl = "http://localhost:5165/api/transaction";
+let adminUrl = "http://localhost:5165/api/admin";
+let customerUrl = "http://localhost:5165/api/Customer";
 let itemUrl = "http://localhost:5165/api/item";
 let items = [];
 
@@ -68,11 +68,82 @@ function DeleteButton(itemId){
     PutItem(temp, itemId)
 }
 
-function EditButton(itemId){
-  
-  //program modal 
+function EditItem(itemid) {
+  // Create a modal element and add it to the page
+  const modal = document.createElement('div');
+  modal.classList.add('modal');
+  document.body.appendChild(modal);
 
+  // Fetch the item data
+  fetch('api/items/' + itemid, { mode: 'no-cors' })
+    .then(response => response.text())
+    .then(data => {
+      const item = JSON.parse(data);
+      
+      // Create a form element with input fields for each item property
+      const form = document.createElement('edit-form');
+      form.innerHTML = `
+        <label for="itemId">Item ID:</label>
+        <input type="text" id="itemid" name="itemid" value="${item.itemid}">
+        <br>
+        <label for="itemImageSrc">Item Image:</label>
+        <input type="text" id="itemImageSrc" name="itemImageSrc" value="${item.itemImageSrc}">
+        <br>
+        <label for="n">Price:</label>
+        <input type="text" id="price" name="price" value="${item.price}">
+        <br>
+        <label for="n">Price:</label>
+        <input type="text" id="price" name="price" value="${item.size}">
+        <br>
+        <label for="n">Price:</label>
+        <input type="text" id="price" name="price" value="${item.cost}">
+        <br>
+        <button type="submit">Save</button>
+      `;
+      debugger
+      // Add a submit event listener to the form to update the item data
+      form.addEventListener('submit', event => {
+        event.preventDefault();
+        const formData = new FormData(form);
+        const updatedItem = {
+          name: formData.get('name'),
+          description: formData.get('description'),
+          price: formData.get('price')
+        };
+
+        // Update the item data on the server
+        fetch('api/items/' + itemid, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(updatedItem),
+          mode: 'no-cors'
+        })
+        .then(() => {
+          // Remove the modal from the page
+          document.body.removeChild(modal);
+          
+          // Reload the page to see the updated item data
+          location.reload();
+        })
+        .catch(error => {
+          console.error('Error updating item:', error);
+        });
+      });
+      
+      // Add the form to the modal
+      modal.appendChild(form);
+      
+      // Show the modal
+      modal.style.display = 'block';
+    })
+    .catch(error => {
+      console.error('Error fetching item:', error);
+    });
 }
+
+
 
 function PutItem(item, id){
 
