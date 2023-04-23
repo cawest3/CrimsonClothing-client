@@ -6,6 +6,9 @@ let itemUrl = "http://localhost:5165/api/item";
 let items = [];
 
 async function HandleOnLoad() {
+
+  JSON.parse(localStorage.getItem("adminActiveUser"))
+  console.log(adminActiveUser)
   getItems().then(() => {
     console.log("In handle on load");
     renderItems();
