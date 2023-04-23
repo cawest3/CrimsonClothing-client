@@ -5,7 +5,7 @@ let customerUrl = "http://localhost:5165/api/Customer";
 let itemUrl = "http://localhost:5165/api/item";
 let items = [];
 
-function HandleOnLoad() {
+async function HandleOnLoad() {
   getItems().then(() => {
     console.log("In handle on load");
     renderItems();
@@ -39,6 +39,7 @@ function renderItems() {
           <div class="card shadow-sm">
             <img src="${item.itemImageSrc}" class="bd-placeholder-img card-img-top" width="100%" height="225">
             <div class="card-body">
+              <p class="card-text">${item.itemName}</p>
               <p class="card-text">${item.size}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
@@ -75,15 +76,8 @@ function EditButton(itemId) {
   modal.classList.add('modal');
   document.body.appendChild(modal);
   
-  
-  // Fetch the item data for the item with the specified ID
-  fetch(itemUrl)
-    // .then(let temp = items.find((item) => item.itemid == itemid),
-    // console.log(temp))
-  //console.log(itemid)
-    .then(response => response.json())
-    .then(item => {
-      // Create a form element with input fields for each item property
+  let temp = items.find((item) => item.itemId == itemId)
+  console.log(temp)
       const form = document.createElement('form');
       form.innerHTML = `
     <div class="modal-dialog" role="document">
@@ -93,19 +87,19 @@ function EditButton(itemId) {
         </div>
         <div class="modal-body">
           <label for="itemid">Item ID:</label>
-          <input type="text" id="itemid" name="itemid" value="${item.itemId}">
+          <input type="text" id="itemid" name="itemid" value="${temp.itemId}">
           <br>
           <label for="itemImageSrc">Item Image:</label>
-          <input type="text" id="itemImageSrc" name="itemImageSrc" value="${item.itemImageSrc}">
+          <input type="text" id="itemImageSrc" name="itemImageSrc" value="${temp.itemImageSrc}">
           <br>
           <label for="price">Price:</label>
-          <input type="text" id="price" name="price" value="${item.price}">
+          <input type="text" id="price" name="price" value="${temp.price}">
           <br>
           <label for="size">Size:</label>
-          <input type="text" id="size" name="size" value="${item.size}">
+          <input type="text" id="size" name="size" value="${temp.size}">
           <br>
           <label for="cost">Cost:</label>
-          <input type="text" id="cost" name="cost" value="${item.cost}">
+          <input type="text" id="cost" name="cost" value="${temp.cost}">
           <br>
         </div>
         <div class="modal-footer">
@@ -121,37 +115,25 @@ function EditButton(itemId) {
       // Add a submit event listener to the form to update the item data
       form.addEventListener('submit', event => {
         event.preventDefault();
-        const formData = new FormData(form);
-        const updatedItem = {
-          itemId: item.itemId,
-          itemImageSrc: formData.get('itemImageSrc'),
-          price: formData.get('price'),
-          size: formData.get('size'),
-          cost: formData.get('cost'),
-          profit: formData.get('price') - formData.get('cost'),
-          consignmentid: item.consignmentid,
-          inCart: item.inCart,
-          stock: item.stock
-        };
-
+        
+        const newItemId = document.getElementById('itemid').value;
+        const newItemImageSrc = document.getElementById('itemImageSrc').value;
+        const newPrice = document.getElementById('price').value;
+        const newSize = document.getElementById('size').value;
+        const newCost = document.getElementById('cost').value;
+      
+        // Update the temp object with the new values
+        temp.itemId = newItemId;
+        temp.itemImageSrc = newItemImageSrc;
+        temp.price = newPrice;
+        temp.size = newSize;
+        temp.cost = newCost;
+      
+        console.log('updated item:', temp);
+        
+  
         // Update the item data on the server
-        fetch(`${itemUrl}/${itemId}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(updatedItem),
-        })
-        .then(() => {
-          // Remove the modal from the page
-          modal.remove();
-          
-          // Reload the page to see the updated item data
-          getItems().then;
-        })
-        .catch(error => {
-          console.error('Error updating item:', error);
-        });
+          PutItemEdit(itemId, temp);
       });
       
       // Add the form to the modal
@@ -159,10 +141,6 @@ function EditButton(itemId) {
       
       // Show the modal
       modal.style.display = 'block';
-    })
-    .catch(error => {
-      console.error('Error fetching item:', error);
-    });
 }
 
 function closeModal() {
@@ -189,86 +167,31 @@ function PutItem(item, itemId){
     });
 }
 
+function PutItemEdit(itemId, temp) {
+  // Update the item with the specified ID on the server
+  fetch(`${itemUrl}/${itemId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(temp)
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    console.log(`Item ${itemId} updated successfully.`);
+    console.log('reload new items');
+    closeModal();
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+}
+
+function AddItem(){
+    console.log('inside ')
+}
 
 
-  // // Add click event listeners for edit and delete buttons
-  // document.addEventListener('click', function (event) {
-  //   if (event.target.matches('.edit-item-btn')) {
-  // // Edit button functionality
-  //     console.log("made it to add to edit inventory click");
-  // //const activeUser = JSON.parse(localStorage.getItem("activeUser"));
-  //     const itemId = event.target.dataset.itemId;
-  //     const editingItem = items.find((item) => item.itemId === itemId);
-  //     console.log(editingItem);
-  //     //EditItem(itemId);
-  //   } else if (event.target.matches('.delete-item-btn')) {
-  //     // Delete button functionality
-  //     const itemId = event.target.dataset.itemId;
-  //     fetch(`${itemUrl}/${itemId}`, {
-  //       method: 'DELETE'
-  //     })
-  //       .then(response => {
-  //         if (response.ok) {
-  //           // Remove item card from DOM
-  //           //const itemCard = document.querySelector(`.item-card[data-item-id="${itemId}"]`);
-  //           //itemCard.parentElement.remove();
-  //           console.log('made it to end off delete')
-  //         }
-  //       });
-  //   }
-  // });
-
-
-// function displayItems(items) {
-//   const container = document.querySelector('.row-cols-md-3');
-
-//   items.forEach(item => {
-//     // Create DOM elements for item
-//     // ...
-//     // Add delete button
-//     const deleteBtn = document.createElement('button');
-//     deleteBtn.type = 'button';
-//     deleteBtn.className = 'btn btn-sm btn-outline-danger delete-item-btn';
-//     deleteBtn.dataset.itemId = item.id;
-//     deleteBtn.textContent = 'Delete';
-
-//     btnGroup.appendChild(deleteBtn);
-
-//     // ...
-
-//     container.appendChild(col);
-//   });
-// }
-
-// fetch(`${customerUrl}/${activeUser.customerId}`, {
-//   method: "PUT",
-//   headers: {
-//     Accept: "application/json",
-//     "Content-Type": "application/json",
-//   },
-//   body: JSON.stringify(activeUser),
-// })
-//   .then((response) => {
-//     console.log(response);
-//     location.reload();
-//   })
-//   .catch((error) => {
-//     console.log(error);
-//   });
-
- // Add in Update Put for the Item
-  // fetch(`${itemUrl}/${editingItem.itemId}`, {
-  //   method: "PUT",
-  //   headers: {
-  //     Accept: "application/json",
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify(editingItem),
-  // })
-  //   .then((response) => {
-  //     console.log(response);
-  //     location.reload();
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //   });
+  

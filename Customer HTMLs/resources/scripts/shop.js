@@ -4,6 +4,7 @@ let adminUrl = "http://localhost:5165/admin";
 let customerUrl = "http://localhost:5165/Customer";
 let itemUrl = "http://localhost:5165/api/item";
 let items = [];
+let cart = [];
 
 function handleOnLoad() {
   getItems().then(() => {
@@ -39,6 +40,7 @@ function renderItems() {
           <div class="card shadow-sm">
             <img src="${item.itemImageSrc}" class="bd-placeholder-img card-img-top" width="100%" height="225">
             <div class="card-body">
+              <p class="card-text">${item.itemName}</p>
               <p class="card-text">${item.size}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
@@ -58,6 +60,7 @@ function renderItems() {
 function handleAddToCartClick(itemId) {
   console.log("made it to add to cart click");
   const activeUser = JSON.parse(localStorage.getItem("activeUser"));
+  console.log("activeuser")
 
   const addingItem = items.find((item) => item.itemId === itemId);
   console.log(addingItem);
@@ -93,7 +96,7 @@ function handleAddToCartClick(itemId) {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(activeUser),
+    body: JSON.stringify(activeUser, activeUser.customerId),
   })
     .then((response) => {
       console.log(response);

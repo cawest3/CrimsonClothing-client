@@ -49,7 +49,8 @@ function CalculateConsignment()
         {item:'belt', quantity: beltQuantity},
         {item:'jacket', quantity: jacketQuantity},
         {item:'dress', quantity: dressQuantity},
-     ]   
+     ]
+     //should there be an event listener here
      // price will log to console, quantity will not work 
         let totalCost = 0;
         for(let item of consignment)
@@ -61,7 +62,7 @@ function CalculateConsignment()
             //get quantity to work
             totalCost += price * 1;
             console.log("Total cost")
-            console.log(tota)
+            console.log(totalCost)
         }
 
         
