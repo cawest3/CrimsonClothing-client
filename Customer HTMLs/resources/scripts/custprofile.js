@@ -1,85 +1,32 @@
-//So, storing Name, Email, & Address For now
-//Missing Navbar on html for now, probably will change
-//Need to add Address, Name, etc. to User
-//  Once double checked, make tables
-
 let activeUser = JSON.parse(localStorage.getItem("activeUser"))
 console.log(activeUser)
-// function setUpUser(){
-//     activeUser = {
-//         userId: 1,
-//         name: 'Jonathan Gaming',
-//         email: 'jonathangaming@epic.com',
-//         address: "1234 Main Street, Mobile, AL 36609"
-//     }
-//     return activeUser
-// }
 
-
-
-function setUpUser() {
-    activeUser = {
-        userId: 1,
-        name: 'Jonathan Gaming',
-        email: 'jonathangaming@epic.com',
-        address: "1234 Main Street, Mobile, AL 36609"
-    }
-    return activeUser;
-}
-
-function handleOnLoad() {
-    setUpUser();
-    let userID = document.getElementById("customerId");
-    userID.innerText = activeUser.userId;
-    let name = document.getElementById("name");
-    name.innerText = activeUser.name;
-    let email = document.getElementById("custusername");
-    email.innerText = activeUser.email;
-    let address = document.getElementById("address");
-    address.innerText = activeUser.address;
-}
-
-document.addEventListener('DOMContentLoaded', handleOnLoad);
-
-function editProfile(){
-    let currUserId = activeUser.userId
-    let name = document.getElementById("name").value//needs to be added
-    let email = document.getElementById("email").value//or username, depending
-    let address = document.getElementById("address").value  //needs to be added
-
-    console.log(name, email, address, currUserId)
-    if (confirm(`Is this correct? Name: ${name}, Email: ${email}, Address: ${address}`)){
-        console.log('confirmed')
-        updateUser(currUserId)
-    } else{
-        return false
-    }
-}
-
-function updateUser(userId){
-    let putUserApiUrl
-    fetch (putUserApiUrl, {
-        method: "PUT",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            customerId: userId,
-            username: email,
-            password: activeUser.password,
-            name: name,
-            address: address,
-        })
+async function getOrders(){
+    let orders = []
+    const allItemsApiUrl = 'http://localhost:5165/api/transaction'
+    const response = await fetch(allItemsApiUrl)
+    const data = await response.json()
+    data.forEach(data =>{
+        if(activeUser.customerId = data.customerId){
+            orders.push(data.transactionId)
+        }
     })
-    .then((response) =>{
-        console.log(response)
-    })
+    console.log(orders)
+    return orders
 }
 
-// async function findUser(currUserId){
-//     let songs = await getUsers()
-//     let returnVal = songs.find(x => x.userId == currUser)
-//     console.log(returnVal)
-//     return returnVal
-// }
+getInfo()
+
+
+
+async function getInfo(){
+    let fName = activeUser.custFName
+    let lName = activeUser.custLName
+    let storeCredit = activeUser.storeCredit
+    let email = activeUser.custusername
+    document.getElementById('Name').innerHTML = fName + ' ' + lName
+    document.getElementById('Email').innerHTML = email
+    // document.getElementById('storeCredit').innerHTML = storeCredit
+    let orders = await getOrders()
+    document.getElementById('Orders').innerHTML = orders
+}
