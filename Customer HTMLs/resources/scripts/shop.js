@@ -4,6 +4,7 @@ let adminUrl = "http://localhost:5165/admin";
 let customerUrl = "http://localhost:5165/Customer";
 let itemUrl = "http://localhost:5165/api/item";
 let items = [];
+let cart = [];
 
 function handleOnLoad() {
   getItems().then(() => {
