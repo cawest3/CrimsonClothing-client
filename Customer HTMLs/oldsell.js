@@ -4,16 +4,16 @@ let transactionUrl = "http://localhost:5165/transaction"
 let adminUrl = "http://localhost:5165/admin"
 let customerUrl = "http://localhost:5165/Customer"
 
-// const pricePerItem= 
-// {
-//     shirt: 5,
-//     pant : 5,
-//     skirt : 5,
-//     dress : 7,
-//     jacket : 10,
-//     shoe : 10,
-//     belt : 7,
-// };
+const pricePerItem= 
+{
+    shirt: 5,
+    pant : 5,
+    skirt : 5,
+    dress : 7,
+    jacket : 10,
+    shoe : 10,
+    belt : 7,
+};
 
 
 function CalculateConsignment()

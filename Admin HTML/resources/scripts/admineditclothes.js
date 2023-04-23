@@ -6,7 +6,8 @@ let itemUrl = "http://localhost:5165/api/item";
 let items = [];
 
 async function HandleOnLoad() {
-  let adminActiveUser = JSON.parse(localStorage.getItem("adminActiveUser"))
+
+  JSON.parse(localStorage.getItem("adminActiveUser"))
   console.log(adminActiveUser)
   getItems().then(() => {
     console.log("In handle on load");
@@ -312,4 +313,3 @@ function closeAddModal() {
   const modal = document.querySelector('.modal');
   modal.remove();
 }
-  
