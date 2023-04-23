@@ -247,7 +247,7 @@ function AddItem() {
         
           // Add new item to inventory
           const newItem = { 
-            itemId: "",
+            //itemId: "",
             itemName: addItemName,  
             itemImageSrc: itemImage,
             price:itemPrice,
