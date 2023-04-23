@@ -247,6 +247,7 @@ function AddItem() {
         
           // Add new item to inventory
           const newItem = { 
+            itemId: "",
             itemName: addItemName,  
             itemImageSrc: itemImage,
             price:itemPrice,
@@ -285,7 +286,7 @@ function AddItem() {
 function PutAddedItem(newItem) {
   // Update the item with the specified ID on the server
   fetch(itemUrl, {
-    method: 'PUT',
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
