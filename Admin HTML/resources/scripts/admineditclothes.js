@@ -190,7 +190,8 @@ function PutItemEdit(itemId, temp) {
 }
 
 function AddItem(){
-    console.log('inside ')
+  console.log('inside ')
+  
 }
 
 
