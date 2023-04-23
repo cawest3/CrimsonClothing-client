@@ -22,7 +22,7 @@ async function getItems() {
   try {
     const response = await fetch(itemUrl);
     const data = await response.json();
-    localStorage.clear();
+    localStorage.clear("items");
     localStorage.setItem("items", JSON.stringify(data));
     items = data;
     console.log(data);
