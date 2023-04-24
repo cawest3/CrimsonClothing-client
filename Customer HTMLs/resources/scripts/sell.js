@@ -46,16 +46,20 @@ if (calculateButton) {
 
 function updateStoreCredit(price) {
   
-    const data = {
-      storeCredit: price
-    };
+    let activeUser = JSON.parse(localStorage.getItem("activeUser"))
+    activeUser.storeCredit = storeCredit + price
+    // const data = {
+    //   storeCredit: price
+    // };
+    activeUser.customerId = Id
   
-    fetch(customerUrl, {
-      method: 'PUT',
+    fetch(`${customerUrl}/${activeUser.customerId}`, {
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json'
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(activeUser, Id),
     })
     .then(response => {
       if (!response.ok) {
@@ -64,7 +68,7 @@ function updateStoreCredit(price) {
       return response.json();
     })
     .then(data => {
-      console.log('Store credit updated successfully:', data);
+      console.log('Store credit updated successfully:', activeUser);
     })
     .catch(error => {
       console.error('There was a problem updating the store credit:', error);
