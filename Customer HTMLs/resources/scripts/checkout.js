@@ -10,7 +10,7 @@ function HandleOnLoad(){
     loadItems();
 }  
 
-function loadItems() {
+function loadItems(itemId) {
     const cart = activeUser.cart
     console.log(activeUser.cart)
     if (!Array.isArray(activeUser.cart)) {
@@ -19,6 +19,9 @@ function loadItems() {
       } else {
         // If activeUser.cart is already an array, do nothing
       }
+    const checkoutCart = cart.find((item) => item.itemId === itemId);
+    console.log(checkoutCart);
+      
 
     const cartItemsContainer = document.querySelector(".items-container");
     let innerHTML = "";
