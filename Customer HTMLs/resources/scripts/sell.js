@@ -53,13 +53,13 @@ function updateStoreCredit(price) {
     // };
     activeUser.customerId = Id
   
-    fetch(customerUrl, {
-      method: 'PUT',
+    fetch(`${customerUrl}/${activeUser.customerId}`, {
+      method: "PUT",
       headers: {
         Accept: "application/json",
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(activeUser, Id)
+      body: JSON.stringify(activeUser, Id),
     })
     .then(response => {
       if (!response.ok) {
