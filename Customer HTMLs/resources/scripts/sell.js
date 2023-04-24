@@ -4,7 +4,8 @@ transactionUrl = "http://localhost:5165/transaction";
 adminUrl = "http://localhost:5165/admin";
 customerUrl = "http://localhost:5165/api/Customer";
 
-function calculateConsignment() {
+function calculateConsignment(event) {
+event.preventDefault();
     
   const firstNameInput = document.getElementById('firstName').value;
   const lastNameInput = document.getElementById('lastName').value;
@@ -44,8 +45,8 @@ function findPrice(type, qty) {
 const calculateButton = document.getElementById('calculateConsignment');
 
 if (calculateButton) {
-  calculateButton.addEventListener('click', calculateConsignment());
-  // updateStoreCredit(price);
+    calculateButton.addEventListener('click', calculateConsignment);
+      // updateStoreCredit(price);
 } else {
   console.error('Error: Could not find calculateButton element');
 }
@@ -56,8 +57,11 @@ function updateStoreCredit(price) {
     console.log(price)
     let activeUser = JSON.parse(localStorage.getItem("activeUser"))
     console.log(activeUser)
+    activeUser.storeCredit = parseFloat(activeUser.storeCredit);
+
     console.log(activeUser.storeCredit)
     activeUser.storeCredit = (activeUser.storeCredit + price)
+    localStorage.setItem('activeUser', JSON.stringify(activeUser))
 
     console.log(activeUser.storeCredit)
     // const data = {
@@ -66,19 +70,19 @@ function updateStoreCredit(price) {
     let Id = activeUser.customerId
   
     fetch(`${customerUrl}/${Id}`, {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(activeUser, Id),
-    })
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    method: "PUT",
+    headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify(activeUser), // Remove the Id argument here
+})
+.then((response) => {
+    console.log(response);
+})
+.catch((error) => {
+    console.log(error);
+});
 
     // .then(response => {
     //   if (!response.ok) {
