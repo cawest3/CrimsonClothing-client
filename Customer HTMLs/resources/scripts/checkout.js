@@ -1,8 +1,8 @@
 let itemUrl = "http://localhost:5165/api/item"
 let consignmentUrl = "http://localhost:5165/consignment"
-let transactionUrl = "http://localhost:5165/transaction"
+let transactionUrl = "http://localhost:5165/api/transaction"
 let adminUrl = "http://localhost:5165/admin"
-let customerUrl = "http://localhost:5165/customer"
+let customerUrl = "http://localhost:5165/api/customer"
 let transactionProfit = 0;
 let activeUser = JSON.parse(localStorage.getItem("activeUser"));
 let items = []
@@ -52,6 +52,8 @@ function loadItems() {
       }
     });
 
+    localStorage.setItem("checkoutCart", JSON.stringify(checkoutCart));
+
     console.log(checkoutCart)
     const cartItemsContainer = document.querySelector(".itemContainer");
     let innerHTML = "";
@@ -61,7 +63,7 @@ function loadItems() {
         checkoutCart.forEach((item) => {
             subtotal += item.price;
               innerHTML += `
-                <div class="col-md-4 order-md-2 mb-4">
+                <div class="col-md-12 order-md-2 mb-4">
                 <ul class="list-group mb-3">
                   <li class="list-group-item d-flex justify-content-between lh-condensed">
                     <div>
@@ -79,6 +81,107 @@ function loadItems() {
 }
 
 }
+
+function PlaceOrder(){
+
+    console.log("in place order")
+    let checkoutCart = JSON.parse(localStorage.getItem("checkoutCart"));
+    let activeUser = JSON.parse(localStorage.getItem("activeUser"));
+
+    checkoutCart.forEach((item) => {
+        item = {
+                itemId: item.itemId,
+                itemImageSrc: item.itemImageSrc,
+                price: item.price,
+                size: item.size,
+                stock: false,
+                value: item.value,
+                profit: item.profit,
+                inCart: true
+        }
+
+        fetch(`${itemUrl}, ${item.itemId}`, {
+          method: "PUT",
+          headers: {
+              "Accept": "application/json",
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(item, item.itemId),
+        }).then((response) => {
+  
+              console.log(response);
+  
+          }).catch((error) => {
+  
+              console.log(error);
+  
+          });
+
+        transactionProfit += item.price
+
+    })
+
+    transaction = {
+        profit: transactionProfit,
+        customerId: activeUser.customerId
+    }
+
+    activeUser.cart = ''
+    checkoutCart = []
+    localStorage.setItem('activeUser', JSON.stringify(activeUser))
+
+    fetch(`${customerUrl}, ${activeUser.customerId}`, {
+      method: "PUT",
+      headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify(activeUser, activeUser.customerId),
+    }).then((response) => {
+        console.log(response)
+      }).catch((error) => {
+          console.log(error);
+      });
+
+    activeUser = JSON.parse(localStorage.getItem("activeUser"));
+
+    fetch(`${transactionUrl}`, {
+        method: "POST",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(transaction),
+    }).then((response) => {
+            alert("You have checked out!")
+            console.log(response);
+            window.location.href = './shop.html' // Redirect to the home page
+
+        }).catch((error) => {
+            console.log(error);
+        });
+}  
+
+async function GetTransactions(){
+    try{
+        const response = await fetch(transactionUrl)
+        const data = await response.json()
+        transaction = []
+        data.forEach((transaction) => {
+            transaction = {
+                transactionId: transaction.tranactionId,
+                profit: transaction.profit,
+                customerId: transaction.customerId,
+            }
+            transactions.push(transaction)
+        })
+        localStorage.setItem('localItems', JSON.stringify(transactions))
+    }
+    catch{
+        console.log("error")
+    }
+}
+
 
 
 //     // get reference to the shopping cart element
@@ -111,97 +214,4 @@ function loadItems() {
 
 //     // append the checkout item to the checkout element
 //     checkout.appendChild(checkoutItem);
-// }
-
-
-
-// function HandleCheckCheckOutClick(){
-
-//     let transactions = JSON.parse(localStorage.getItem("transactions")) ? JSON.parse(localStorage.getItem('transactions')) : []
-
-//     checkoutCart.forEach((item) => {
-//         item = {
-//                 itemId: item.itemId,
-//                 itemImageSrc: item.itemImageSrc,
-//                 price: item.price,
-//                 size: item.size,
-//                 stock: false,
-//                 value: item.value,
-//                 profit: item.profit,
-//                 inCart: true
-//         }
-
-//         fetch(`${itemUrl}, ${item.itemId}`, {
-//             method: "PUT",
-//             headers: {
-//                 "Accept": "application/json",
-//                 "Content-Type": "application/json",
-//             },
-//             body: JSON.stringify(item, item.itemId),
-//         }).then((response) => {
-    
-//                 console.log(response);
-//                 location.reload()
-//                 location.reload()
-    
-//             }).catch((error) => {
-    
-//                 console.log(error);
-    
-//             });
-
-//         transactionProfit += item.price
-
-//     })
-
-//     transaction = {
-//         profit: transactionProfit,
-//         customerId: activeUser.customerId
-//     }
-
-//     fetch(`${transactionUrl}`, {
-//         method: "POST",
-//         headers: {
-//             "Accept": "application/json",
-//             "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify(transaction),
-//     }).then((response) => {
-
-//             console.log(response);
-//             location.reload()
-//             location.reload()
-
-//         }).catch((error) => {
-
-//             console.log(error);
-
-//         });
-
-        
-// }  
-
- 
-   
-
-// async function GetTransactions(){
-//     try{
-//         const response = await fetch(transactionUrl)
-//         const data = await response.json()
-//         transaction = []
-//         data.forEach((transaction) => {
-//             transaction = {
-//                 transactionId: transaction.tranactionId,
-//                 profit: transaction.profit,
-//                 customerId: transaction.customerId,
-//             }
-//             transactions.unshift(transaction)
-//         })
-        
-//         localStorage.clear()
-//         localStorage.setItem('localItems', JSON.stringify(transactions))
-//     }
-//     catch{
-//         console.log("error")
-//     }
 // }

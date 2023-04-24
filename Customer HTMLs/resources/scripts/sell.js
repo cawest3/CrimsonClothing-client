@@ -1,5 +1,5 @@
-itemUrl = "http://localhost:5165/item";
-consignmentUrl = "http://localhost:5165/consignment";
+itemUrl = "http://localhost:5165/api/item";
+consignmentUrl = "http://localhost:5165/api/consignment";
 transactionUrl = "http://localhost:5165/transaction";
 adminUrl = "http://localhost:5165/admin";
 customerUrl = "http://localhost:5165/api/Customer";
@@ -12,13 +12,18 @@ event.preventDefault();
   const emailInput = document.getElementById('emailInput').value;
   const typeInput = document.getElementById('itemType').value;
   const sizeInput = document.getElementById('sizeInput').value;
+const nameInput = document.getElementById('nameInput').value
   const qtyInput = Number(document.getElementById('qtyInput').value);
   const pictureInput = document.getElementById('pictureUpload').value;
 
   console.log(qtyInput)
   console.log(typeInput)
 
-  const price = findPrice(typeInput, qtyInput);
+const price = findPrice(typeInput, qtyInput);
+const cost = findCost(typeInput, qtyInput)
+
+createConsignmentItem(price, cost)
+
   console.log()
   console.log(price);
 
@@ -101,6 +106,58 @@ function updateStoreCredit(price) {
 .catch((error) => {
     console.log(error);
 });
+}
+
+function createConsignmentItem(cost, price){
+    let activeUser = JSON.parse(localStorage.getItem("activeUser"))
+    let newItem = {
+        itemImageSrc: document.getElementById('pictureUpload').value,
+        price: price,
+        size: document.getElementById('sizeInput').value,
+        stock: true,
+        cost: cost,
+        profit: price - cost,
+        inCart: false,
+        consignmentId: 0,
+        itemName: document.getElementById('nameInput').value
+    }
+    console.log(newItem)
+    let newConsignment = {
+        customerId: activeUser.customerId,
+        price: price,
+        cost: cost,
+        profit: price - cost,
+        consignmentImageSrc: document.getElementById('pictureUpload').value
+    }
+    console.log(newConsignment)
+    fetch(itemUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newItem)
+    })
+    .then(response => {
+        if(!response.ok){
+            throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        console.log(`Item ${itemId} updated successfully.`)
+    })
+
+    fetch(consignmentUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newConsignment)
+    })
+    .then(response => {
+        if(!response.ok){
+            throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        console.log(`Consignment ${consignmentId} updated successfully.`)
+    })
+}
 
     // .then(response => {
     //   if (!response.ok) {
@@ -114,8 +171,9 @@ function updateStoreCredit(price) {
     // .catch(error => {
     //   console.error('There was a problem updating the store credit:', error);
     // });
-  }
+  // }
   
+
 
 // function AddAnotherItem()
 // {
