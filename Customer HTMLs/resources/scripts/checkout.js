@@ -82,7 +82,7 @@ function loadItems() {
 
 }
 
-function HandlePlaceOrder(){
+function PlaceOrder(){
 
     let checkoutCart = JSON.parse(localStorage.getItem("checkoutCart"));
     let activeUser = JSON.parse(localStorage.getItem("activeUser"));
