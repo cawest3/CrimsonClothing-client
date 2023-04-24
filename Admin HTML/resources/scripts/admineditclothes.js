@@ -5,6 +5,7 @@ let customerUrl = "http://localhost:5165/api/Customer";
 let itemUrl = "http://localhost:5165/api/item";
 let items = [];
 
+
 async function HandleOnLoad() {
 
   let adminActiveUser = JSON.parse(localStorage.getItem("adminActiveUser"))
@@ -193,8 +194,6 @@ function PutItemEdit(itemId, temp) {
   });
 }
 
-
-
 function AddItem() {
   console.log('in add button')
   // Create a modal element and add it to the page
@@ -310,6 +309,102 @@ function PutAddedItem(newItem) {
 }
 
 function closeAddModal() {
-  const modal = document.querySelector('.modal');
+  const modal = document.querySelector('.usermodal');
+  modal.remove();
+}
+
+function AddAdminUser() {
+    console.log('inside add admin user')
+    const modal = document.createElement('div');
+    modal.classList.add('modal');
+    document.body.appendChild(modal);
+    
+        const form = document.createElement('form');
+        form.innerHTML = `
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Add Admin User</h5>
+          </div>
+          <div class="modal-body">
+            <label for="ausername">Username:</label>
+            <input type="text" id="ausername" name="ausername" value="">
+            <br>
+            <label for="apassword">Password:</label>
+            <input type="text" id="apassword" name="apassword" value="">
+            <br>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Save New User</button>
+            <button onclick="closeModal()"type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  
+        // Add a submit event listener to the form to update the item data
+        form.addEventListener('submit', event => {
+          event.preventDefault();
+          
+          
+            // Get input values
+            const newUsername = document.getElementById("ausername").value;
+            const newPassword = document.getElementById("ausername").value;
+          
+            // Add new item to inventory
+            const newAdminLogin = { 
+              //itemId: "",
+              adminUsername: newUsername,  
+              adminPassword: newPassword,
+            };
+            adminLogins.push(newAdminLogin);
+          
+            // Clear input fields
+            document.getElementById("ausername").value = "";
+            document.getElementById("ausername").value = "";
+  
+            console.log(newAdminLogin);
+          
+            // Close modal
+            closeAddUserModal();
+        
+          // Update the item data on the server
+            PutAddedALogin(newAdminLogin);
+        });
+        
+        // Add the form to the modal
+        modal.appendChild(form);
+        
+        // Show the modal
+        modal.style.display = 'block';
+}
+
+function PutAddedLogin(newAdminLogin)  {
+  // Update the admin logins 
+  fetch(adminUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(newAdminLogin)
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    console.log(`Login with ID: ${adminId} added successfully.`);
+    console.log('reload');
+    location.reload();
+    closeModal();
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+}
+
+function closeAddUserModal() {
+  const modal = document.querySelector('.usermodal');
   modal.remove();
 }

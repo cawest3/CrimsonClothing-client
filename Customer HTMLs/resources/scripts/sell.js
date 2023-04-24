@@ -5,6 +5,7 @@ let adminUrl = "http://localhost:5165/admin";
 let customerUrl = "http://localhost:5165/Customer";
 
 function calculateConsignment() {
+    
   const firstNameInput = document.getElementById('firstName').value;
   const lastNameInput = document.getElementById('lastName').value;
   const emailInput = document.getElementById('emailInput').value;
