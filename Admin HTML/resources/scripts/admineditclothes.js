@@ -137,7 +137,7 @@ function EditButton(itemId) {
         
   
         // Update the item data on the server
-          PutItemEdit(itemId, temp);
+          PutItemEdit(temp,itemId);
       });
       
       // Add the form to the modal
@@ -171,14 +171,14 @@ function PutItem(item, itemId){
     });
 }
 
-function PutItemEdit(itemId, temp) {
+function PutItemEdit(temp, itemId) {
   // Update the item with the specified ID on the server
   fetch(`${itemUrl}/${itemId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(temp)
+    body: JSON.stringify(temp, itemId)
   })
   .then(response => {
     if (!response.ok) {
