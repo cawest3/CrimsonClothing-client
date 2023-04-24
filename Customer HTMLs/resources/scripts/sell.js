@@ -37,10 +37,39 @@ const calculateButton = document.getElementById('calculateConsignment');
 
 if (calculateButton) {
   calculateButton.addEventListener('click', calculateConsignment);
+  updateStoreCredit();
 } else {
   console.error('Error: Could not find calculateButton element');
 }
 
+
+function updateStoreCredit(price) {
+  
+    const data = {
+      storeCredit: price
+    };
+  
+    fetch(customerUrl, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Store credit updated successfully:', data);
+    })
+    .catch(error => {
+      console.error('There was a problem updating the store credit:', error);
+    });
+  }
+  
 
 // function AddAnotherItem()
 // {

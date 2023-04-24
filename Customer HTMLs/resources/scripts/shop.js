@@ -71,19 +71,12 @@ function handleAddToCartClick(itemId) {
   console.log(addingItem);
 
   // Ensure activeUser.cart is an array
-  // if (!Array.isArray(activeUser.cart)) {
-  //   activeUser.cart = [];
-  // }
-
-  // activeUser.cart.push(String(addingItem.itemId));
-  // console.log(activeUser.cart);
-  if (cart = ''){
-    cart = `${itemId}`
-  } else{
-    cart += ` ${itemId}`
+  if (!Array.isArray(activeUser.cart)) {
+    activeUser.cart = [];
   }
-  activeUser.cart = cart
-  
+
+  activeUser.cart.push(String(addingItem.itemId));
+  console.log(activeUser.cart);
   addingItem.stock = false;
   addingItem.inCart = true;
 
