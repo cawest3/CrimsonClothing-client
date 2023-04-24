@@ -7,12 +7,18 @@ let transactionProfit = 0;
 let activeUser = JSON.parse(localStorage.getItem("activeUser"));
 
 function HandleOnLoad(){
-    loadItems()
+    loadItems();
 }  
 
 function loadItems() {
     const cart = activeUser.cart
     console.log(activeUser.cart)
+    if (!Array.isArray(activeUser.cart)) {
+        // If activeUser.cart is not already an array, convert it from a string to an array
+        activeUser.cart = activeUser.cart.split(',');
+      } else {
+        // If activeUser.cart is already an array, do nothing
+      }
 
     const cartItemsContainer = document.querySelector(".items-container");
     let innerHTML = "";
