@@ -33,14 +33,14 @@ async function handleSubmit(event) {
   console.log('hi')
   if (AdminLogin(adminInputUsername, adminInputPassword)) {
 
-      //Amanda's work delete if this doesn't work 
-      console.log(inputUsername.value)
-      let administrators = JSON.parse(localStorage.getItem("adminLogins"));
-      console.log(administrators)
-      let temp = administrators.find((admin) => admin.adminUsername == adminInputUsername.value);
-      console.log(temp);
-      localStorage.setItem('adminActiveUser', JSON.stringify(temp));
-      //Amanda's work ending
+      // //Amanda's work delete if this doesn't work 
+      // console.log(inputUsername.value)
+      // let administrators = JSON.parse(localStorage.getItem("adminLogins"));
+      // console.log(administrators)
+      // let temp = administrators.find((admin) => admin.adminUsername == adminInputUsername.value);
+      // console.log(temp);
+      // localStorage.setItem('adminActiveUser', JSON.stringify(temp));
+      // //Amanda's work ending
 
     window.location.href = './reports.html' // Redirect to the home page
   } else {
