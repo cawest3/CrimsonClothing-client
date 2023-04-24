@@ -65,54 +65,74 @@ function renderItems() {
 function handleAddToCartClick(itemId) {
   console.log("made it to add to cart click");
   const activeUser = JSON.parse(localStorage.getItem("activeUser"));
-  console.log(activeUser)
+  console.log(activeUser);
 
   const addingItem = items.find((item) => item.itemId === itemId);
   console.log(addingItem);
 
   // Ensure activeUser.cart is an array
-  if (!Array.isArray(activeUser.cart)) {
-    activeUser.cart = [];
-  }
+  // if (!Array.isArray(activeUser.cart)) {
+  //   activeUser.cart = [];
+  // }
 
-  activeUser.cart.push(String(addingItem.itemId));
-  console.log(activeUser.cart);
+  // activeUser.cart.push(String(addingItem.itemId));
+  // console.log(activeUser.cart);
+  if (cart = ''){
+    cart = `${itemId}`
+  } else{
+    cart += ` ${itemId}`
+  }
+  activeUser.cart = cart
+  
   addingItem.stock = false;
   addingItem.inCart = true;
 
   console.log(activeUser);
-  // Add in Update Put for the Item
+
+  // Update the Item in the API
   fetch(`${itemUrl}/${addingItem.itemId}`, {
     method: "PUT",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(addingItem, addingItem.itemId),
+    body: JSON.stringify(addingItem),
   })
     .then((response) => {
       console.log(response);
-      location.reload();
+      return response.json();
+    })
+    .then((updatedItem) => {
+      console.log("Item update successful: ", updatedItem);
+
+      // Update the User in the API
+      return fetch(`${customerUrl}/${activeUser.customerId}`, {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(activeUser),
+      });
+    })
+    .then((response) => {
+      console.log(response);
+      return response.json();
+    })
+    .then((updatedUser) => {
+      console.log("User update successful: ", updatedUser);
+
+      // Update activeUser in localStorage
+      localStorage.setItem("activeUser", JSON.stringify(activeUser));
+
+      // Update the UI
+      renderItems();
     })
     .catch((error) => {
       console.log(error);
     });
 
-  // add update for user
-  fetch(`${customerUrl}/${activeUser.customerId}`, {
-    method: "PUT",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(activeUser, activeUser.customerId),
-  })
-    .then((response) => {
-      console.log(response);
-      location.reload();
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-    console.log(cart);
+  console.log(cart);
 }
+
+
