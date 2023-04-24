@@ -61,6 +61,7 @@ function updateStoreCredit(price) {
 
     console.log(activeUser.storeCredit)
     activeUser.storeCredit = (activeUser.storeCredit + price)
+    localStorage.setItem('activeUser', JSON.stringify(activeUser))
 
     console.log(activeUser.storeCredit)
     // const data = {
