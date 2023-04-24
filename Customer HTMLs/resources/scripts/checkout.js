@@ -11,7 +11,7 @@ function HandleOnLoad(){
 }  
 
 function loadItems() {
-   
+    const cart = activeUser.cart
     console.log(activeUser.cart)
 
     const cartItemsContainer = document.querySelector(".items-container");
@@ -47,37 +47,37 @@ function loadItems() {
 }
 
 
-    // get reference to the shopping cart element
-    const checkoutCart = document.getElementById('cart');
+//     // get reference to the shopping cart element
+//     const checkoutCart = document.getElementById('cart');
 
-    // get reference to the checkout element
-    const checkout = document.getElementById('checkout');
+//     // get reference to the checkout element
+//     const checkout = document.getElementById('checkout');
 
-    // loop through each item in the shopping cart
-    for (let i = 0; i < checkoutCart.children.length; i++) {
-    // create a new checkout item element
-    const checkoutItem = document.createElement('div');
-    checkoutItem.classList.add('checkout-item');
+//     // loop through each item in the shopping cart
+//     for (let i = 0; i < checkoutCart.children.length; i++) {
+//     // create a new checkout item element
+//     const checkoutItem = document.createElement('div');
+//     checkoutItem.classList.add('checkout-item');
 
-    // copy over the item name and price from the shopping cart
-    const itemName = checkoutCart.children[i].querySelector('.item-name').textContent;
-    const itemPrice = checkoutCart.children[i].querySelector('.item-price').textContent;
+//     // copy over the item name and price from the shopping cart
+//     const itemName = checkoutCart.children[i].querySelector('.item-name').textContent;
+//     const itemPrice = checkoutCart.children[i].querySelector('.item-price').textContent;
 
-    // create a new element for the item name and append it to the checkout item
-    const itemNameElement = document.createElement('span');
-    itemNameElement.classList.add('checkout-item-name');
-    itemNameElement.textContent = itemName;
-    checkoutItem.appendChild(itemNameElement);
+//     // create a new element for the item name and append it to the checkout item
+//     const itemNameElement = document.createElement('span');
+//     itemNameElement.classList.add('checkout-item-name');
+//     itemNameElement.textContent = itemName;
+//     checkoutItem.appendChild(itemNameElement);
 
-    // create a new element for the item price and append it to the checkout item
-    const itemPriceElement = document.createElement('span');
-    itemPriceElement.classList.add('checkout-item-price');
-    itemPriceElement.textContent = itemPrice;
-    checkoutItem.appendChild(itemPriceElement);
+//     // create a new element for the item price and append it to the checkout item
+//     const itemPriceElement = document.createElement('span');
+//     itemPriceElement.classList.add('checkout-item-price');
+//     itemPriceElement.textContent = itemPrice;
+//     checkoutItem.appendChild(itemPriceElement);
 
-    // append the checkout item to the checkout element
-    checkout.appendChild(checkoutItem);
-}
+//     // append the checkout item to the checkout element
+//     checkout.appendChild(checkoutItem);
+// }
 
 
 
