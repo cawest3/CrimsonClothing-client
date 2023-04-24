@@ -7,36 +7,72 @@ let transactionProfit = 0;
 let activeUser = JSON.parse(localStorage.getItem("activeUser"));
 
 function HandleOnLoad(){
-    loadItems()
+  getItems();
+  MatchCart();
+  loadItems();
 }  
 
-function loadItems() {
-    const cart = activeUser.cart
-    console.log(activeUser.cart)
+
+async function getItems() {
+  try {
+    const response = await fetch(itemUrl);
+    const data = await response.json();
+    localStorage.removeItem("items");
+    localStorage.setItem("items", JSON.stringify(data));
+    items = data;
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+function MatchCart(){
+
+  const cart = activeUser.cart
+  console.log(activeUser.cart)
+  if (!Array.isArray(activeUser.cart)) {
+      // If activeUser.cart is not already an array, convert it from a string to an array
+      activeUser.cart = activeUser.cart.split(',');
+    } else {
+      // If activeUser.cart is already an array, do nothing
+    }
+
+    const checkoutCart = [];
+    items.forEach(item => {
+      const matchingItems = cart.filter((cartItem) => cartItem.itemId === item.itemId);
+      checkoutCart.push(...matchingItems);
+      console.log(checkoutCart);
+      console.log(item);
+    });
+    
+}
+
+function loadItems(itemId) {
 
     const cartItemsContainer = document.querySelector(".items-container");
     let innerHTML = "";
     let subtotal = 0;
 
     try {
-        cart.forEach((item) => {
+        checkoutCart.forEach((item) => {
             subtotal += item.price;
             if (item.inCart === true) {
               innerHTML += `
-              <div class="col-md-4 order-md-2 mb-4">
-              <h4 class="d-flex justify-content-between align-items-center mb-3">
-                <span class="text-muted">Your cart</span>
-                <span class="badge badge-secondary badge-pill">3</span>
-              </h4>
-              <ul class="list-group mb-3">
-                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                  <div>
-                    <h6 class="my-0">Product name</h6>
-                    <small class="text-muted">Item Name</small>
-                  </div>
-                  <span class="text-muted">$12</span>
-                </li>
-                </ul>
+                <div class="col-md-4 order-md-2 mb-4">
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                  <span class="text-muted">Your cart</span>
+                  <span class="badge badge-secondary badge-pill">3</span>
+                </h4>
+                <ul class="list-group mb-3">
+                  <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                      <h6 class="my-0">Product name</h6>
+                      <small class="text-muted">${item.name}</small>
+                    </div>
+                    <span class="text-muted">${item.price}</span>
+                  </li>
+                  </ul>
               `;
             }
           });
