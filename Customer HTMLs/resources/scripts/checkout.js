@@ -29,7 +29,7 @@ async function getItems() {
 
 function loadItems() {
 
-  const cart = activeUser.cart
+
   console.log(activeUser.cart)
   if (!Array.isArray(activeUser.cart)) {
       // If activeUser.cart is not already an array, convert it from a string to an array
@@ -38,49 +38,46 @@ function loadItems() {
       // If activeUser.cart is already an array, do nothing
     }
 
+    const cart = activeUser.cart
+
     console.log("in render");
     items = JSON.parse(localStorage.getItem("items"));
     console.log(items);
 
     const checkoutCart = [];
-    items.forEach(item => {
-      const matchingItems = items.filter((item) => cart.itemId === item.itemId);
-      checkoutCart.push(...matchingItems);
-      console.log(checkoutCart);
-      console.log(item);
+    cart.forEach(itemId => {
+      const matchingItem = items.find(item => item.itemId === Number(itemId));
+      if (matchingItem) {
+        checkoutCart.push(matchingItem);
+      }
     });
 
     console.log(checkoutCart)
-    const cartItemsContainer = document.querySelector("itemContainer");
+    const cartItemsContainer = document.querySelector(".itemContainer");
     let innerHTML = "";
     let subtotal = 0;
-
+    console.log('hi')
     try {
         checkoutCart.forEach((item) => {
             subtotal += item.price;
-            if (item.inCart === true) {
               innerHTML += `
                 <div class="col-md-4 order-md-2 mb-4">
-                <h4 class="d-flex justify-content-between align-items-center mb-3">
-                  <span class="text-muted">Your cart</span>
-                  <span class="badge badge-secondary badge-pill">3</span>
-                </h4>
                 <ul class="list-group mb-3">
                   <li class="list-group-item d-flex justify-content-between lh-condensed">
                     <div>
-                      <h6 class="my-0">Product name</h6>
-                      <small class="text-muted">${item.name}</small>
+                      <h6 class="my-0">${item.itemName}</h6>
                     </div>
-                    <span class="text-muted">${item.price}</span>
+                    <span class="text-muted">Price: $${item.price}</span>
                   </li>
                   </ul>
               `;
-            }
+            
           });
         cartItemsContainer.innerHTML = innerHTML;
     } catch {
-        console.log("error");
-    }
+  console.log("error")
+}
+
 }
 
 
