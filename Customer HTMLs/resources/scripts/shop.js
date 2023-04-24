@@ -1,7 +1,7 @@
 let consignmentUrl = "http://localhost:5165/consignment";
 let transactionUrl = "http://localhost:5165/transaction";
 let adminUrl = "http://localhost:5165/admin";
-let customerUrl = "http://localhost:5165/Customer";
+let customerUrl = "http://localhost:5165/api/Customer";
 let itemUrl = "http://localhost:5165/api/item";
 let items = [];
 let cart = [];
@@ -70,14 +70,15 @@ function handleAddToCartClick(itemId) {
   const addingItem = items.find((item) => item.itemId === itemId);
   console.log(addingItem);
 
+  console.log(activeUser)
+
   // Ensure activeUser.cart is an array
   if (!Array.isArray(activeUser.cart)) {
     activeUser.cart = [];
   }
 
-  activeUser.cart.push(String(addingItem.itemId));
+  activeUser.cart.push(addingItem.itemId);
   console.log(activeUser.cart);
-  addingItem.stock = false;
   addingItem.inCart = true;
 
   console.log(activeUser);
@@ -98,6 +99,9 @@ function handleAddToCartClick(itemId) {
       console.log(error);
     });
 
+  // Convert activeUser.cart array to a string
+  activeUser.cart = activeUser.cart.join(',');
+
   // add update for user
   fetch(`${customerUrl}/${activeUser.customerId}`, {
     method: "PUT",
@@ -114,5 +118,7 @@ function handleAddToCartClick(itemId) {
     .catch((error) => {
       console.log(error);
     });
-    console.log(cart);
+  console.log(cart);
 }
+
+
