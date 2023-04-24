@@ -73,7 +73,7 @@ function handleAddToCartClick(itemId) {
   // Ensure activeUser.cart is an array
   if (!Array.isArray(activeUser.cart)) {
     // If activeUser.cart is not already an array, convert it from a string to an array
-    activeUser.cart = activeUser.cart.split(',');
+    activeUser.cart = activeUser.cart.trim() ? activeUser.cart.split(',') : []
   } else {
     // If activeUser.cart is already an array, do nothing
   }
