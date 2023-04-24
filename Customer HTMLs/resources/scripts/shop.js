@@ -70,27 +70,20 @@ function handleAddToCartClick(itemId) {
   const addingItem = items.find((item) => item.itemId === itemId);
   console.log(addingItem);
 
-<<<<<<< HEAD
-=======
-  console.log(activeUser)
-
->>>>>>> c559cf4ba0ad40a0d3fe3e40011ff2c37d93b753
   // Ensure activeUser.cart is an array
   if (!Array.isArray(activeUser.cart)) {
-    activeUser.cart = [];
+    // If activeUser.cart is not already an array, convert it from a string to an array
+    activeUser.cart = activeUser.cart.split(',');
+  } else {
+    // If activeUser.cart is already an array, do nothing
   }
-
-<<<<<<< HEAD
+  
   activeUser.cart.push(String(addingItem.itemId));
   console.log(activeUser.cart);
-  addingItem.stock = false;
-=======
-  activeUser.cart.push(addingItem.itemId);
-  console.log(activeUser.cart);
->>>>>>> c559cf4ba0ad40a0d3fe3e40011ff2c37d93b753
-  addingItem.inCart = true;
-
-  console.log(activeUser);
+  
+  // Convert activeUser.cart back to a string
+  activeUser.cart = activeUser.cart.join(',');
+  
   // Add in Update Put for the Item
   fetch(`${itemUrl}/${addingItem.itemId}`, {
     method: "PUT",
@@ -100,18 +93,18 @@ function handleAddToCartClick(itemId) {
     },
     body: JSON.stringify(addingItem, addingItem.itemId),
   })
-    .then((response) => {
-      console.log(response);
-      location.reload();
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-
-  // Convert activeUser.cart array to a string
-  activeUser.cart = activeUser.cart.join(',');
-
-  // add update for user
+  .then((response) => {
+    console.log(response);
+    location.reload();
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+  
+  // Update activeUser.cart in localStorage
+  localStorage.setItem('activeUser', JSON.stringify(activeUser));
+  
+  // Add update for user
   fetch(`${customerUrl}/${activeUser.customerId}`, {
     method: "PUT",
     headers: {
@@ -120,15 +113,14 @@ function handleAddToCartClick(itemId) {
     },
     body: JSON.stringify(activeUser, activeUser.customerId),
   })
-    .then((response) => {
-      console.log(response);
-      location.reload();
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  .then((response) => {
+    console.log(response);
+    location.reload();
+  })
+  .catch((error) => {
+    console.log(error);
+  });
   console.log(cart);
-}
-
+}  
 
 
