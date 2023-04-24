@@ -345,7 +345,8 @@ function AddAdminUser() {
   
   
         // Add a submit event listener to the form to update the item data
-        form.addEventListener('submit', event => {
+        form.addEventListener("submit", handleSubmit);
+        async function handleSubmit(event) {
           event.preventDefault();
           
           
@@ -355,53 +356,45 @@ function AddAdminUser() {
           
             // Add new item to inventory
             const newAdminLogin = { 
-              //itemId: "",
               adminUsername: newUsername,  
               adminPassword: newPassword,
             };
-            adminLogins.push(newAdminLogin);
-          
+            
             // Clear input fields
             document.getElementById("ausername").value = "";
-            document.getElementById("ausername").value = "";
+            document.getElementById("apassword").value = "";
   
             console.log(newAdminLogin);
-          
-            // Close modal
-            closeAddUserModal();
+            //closeAddUserModal();
         
           // Update the item data on the server
-            PutAddedALogin(newAdminLogin);
-        });
-        
+          try {
+            console.log('made')
+            const response = await fetch(adminUrl, {
+              method: "POST",
+              body: JSON.stringify(newAdminLogin),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+            if (response.ok) {
+              console.log('made it')
+              alert("Account created successfully!");
+              //window.location.href = "./resources/adminlogin.html";
+            } else {
+              alert("An error occurred. Please try again.");
+            }
+          } catch (error) {
+            console.error("Error:", error);
+            alert("An error occurred. Please try again.");
+          }
+        };
+      
         // Add the form to the modal
         modal.appendChild(form);
         
         // Show the modal
         modal.style.display = 'block';
-}
-
-function PutAddedLogin(newAdminLogin)  {
-  // Update the admin logins 
-  fetch(adminUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(newAdminLogin)
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    console.log(`Login with ID: ${adminId} added successfully.`);
-    console.log('reload');
-    location.reload();
-    closeModal();
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
 }
 
 function closeAddUserModal() {
