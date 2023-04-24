@@ -99,24 +99,24 @@ function PlaceOrder(){
                 inCart: true
         }
 
-        fetch(`${itemUrl}, ${item.itemId}`, {
-            method: "PUT",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(item, item.itemId),
+        fetch(`${itemUrl}, ${itemId}`, {
+          method: "PUT",
+          headers: {
+              "Accept": "application/json",
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(item, itemId),
         }).then((response) => {
-    
-                console.log(response);
-                location.reload()
-                location.reload()
-    
-            }).catch((error) => {
-    
-                console.log(error);
-    
-            });
+  
+              console.log(response);
+              location.reload()
+              location.reload()
+  
+          }).catch((error) => {
+  
+              console.log(error);
+  
+          });
 
         transactionProfit += item.price
 
@@ -137,7 +137,10 @@ function PlaceOrder(){
     }).then((response) => {
             alert("You have checked out!")
             console.log(response);
-            location.reload()
+            activeUser.cart = ''
+            checkoutCart = []
+            let activeUser = JSON.parse(localStorage.setItem("activeUser"));
+            window.location.href = './shop.html' // Redirect to the home page
 
         }).catch((error) => {
             console.log(error);
