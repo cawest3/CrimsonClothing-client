@@ -7,7 +7,7 @@ async function getOrders(){
     const response = await fetch(allItemsApiUrl)
     const data = await response.json()
     data.forEach(data =>{
-        if(activeUser.customerId = data.customerId){
+        if(activeUser.customerId === data.customerId){
             orders.push(data.transactionId)
         }
     })
