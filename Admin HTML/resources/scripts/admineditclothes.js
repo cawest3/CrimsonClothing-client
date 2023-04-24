@@ -272,7 +272,7 @@ function AddItem() {
           console.log(newItem);
         
           // Close modal
-          closeAddModal();
+          //closeAddModal();
       
         // Update the item data on the server
           PutAddedItem(newItem);
