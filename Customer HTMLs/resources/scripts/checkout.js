@@ -96,15 +96,13 @@ function HandleCheckCheckOutClick(){
  function loadCartItems() {
     const cartItemsContainer = document.querySelector(".items-container");
     let innerHTML = "";
-    
-
     let subtotal = 0;
 
     try {
         // const response = await fetch(transactionUrl);
         // const cartItems = await response.json();
 
-        cartItems.forEach((item) => {
+        checko.forEach((item) => {
             subtotal += item.price;
             if (item.inCart === true) {
               innerHTML += `
@@ -125,12 +123,7 @@ function HandleCheckCheckOutClick(){
               `;
             }
           });
-        cartItemsContainer.insertAdjacentHTML("beforeend", cartItemHtml);
-
-        
-
-        cartItemsContainer.insertAdjacentHTML("beforeend", subtotalHtml);
-
+        cartItemsContainer.innerHTML = innerHTML;
     } catch (error) {
         console.error("Error fetching cart items:", error);
     }
