@@ -3,24 +3,22 @@ let consignmentUrl = "http://localhost:5165/consignment"
 let transactionUrl = "http://localhost:5165/transaction"
 let adminUrl = "http://localhost:5165/admin"
 let customerUrl = "http://localhost:5165/api/Customer"
-let custLogins = JSON.parse(localStorage.getItem("customerLogins")) ? JSON.parse(localStorage.getItem('customerLogins')) : []
+// let custLogins = JSON.parse(localStorage.getItem("customerLogins")) ? JSON.parse(localStorage.getItem('customerLogins')) : []
 
-function HandleOnLoad()
-{
-  GetCustLogins();
+
+function HandleOnLoad() {
+  getCustLogins();
 }
- 
-async function GetCustLogins() {
+
+async function getCustLogins() {
   try {
     const response = await fetch(customerUrl);
     const data = await response.json();
-    localStorage.clear();
     localStorage.setItem('customerLogins', JSON.stringify(data));
-    console.log(data);
   } catch {
     console.log("error");
   }
-} // Add missing closing brace
+}
 
 const cLoginForm = document.getElementById("login-form");
 cLoginForm.addEventListener("submit", handleSubmit);
@@ -30,32 +28,26 @@ async function handleSubmit(event) {
 
   const inputUsername = event.target.querySelector('input[name="email"]');
   const inputPassword = event.target.querySelector('input[name="password"]');
-  console.log('hi')
-  if (CustomerLogin(inputUsername, inputPassword)) {
-
-    //Amanda's work delete if this doesn't work 
-    console.log(inputUsername.value)
-    let customers = JSON.parse(localStorage.getItem("customerLogins"));
-    console.log(customers)
-    let temp = customers.find((customer) => customer.custusername == inputUsername.value);
-    console.log(temp);
-    localStorage.setItem('activeUser', JSON.stringify(temp));
-    //Amanda's work ending
-
-    window.location.href = './shop.html' // Redirect to the home page
-
+  
+  const isLoggedIn = await customerLogin(inputUsername.value, inputPassword.value);
+  
+  if (isLoggedIn) {
+    const activeUser = JSON.parse(localStorage.getItem("customerLogins")).find(customer => customer.custusername === inputUsername.value);
+    localStorage.setItem('activeUser', JSON.stringify(activeUser));
+    window.location.href = './shop.html';
   } else {
     alert("Invalid email or password. Please try again.");
   }
 }
 
-async function CustomerLogin(inputUsername, inputPassword) {
-  const custLogins = JSON.parse(localStorage.getItem("customerLogins"));
-  for (const cLogin of custLogins) {
-    if (cLogin.custUsername === inputUsername.value && cLogin.password === inputPassword.value) {
-      return true;
-    }
-  }
-  return false;
-}
+async function customerLogin(email, password) {
+  try {
+    const response = await fetch(customerUrl);
+    const data = await response.json();
 
+    return data.some(customer => customer.custusername === email && customer.custPassword === password);
+    } catch (error) {
+    console.error('Error while validating credentials:', error);
+    return false;
+  }
+}
