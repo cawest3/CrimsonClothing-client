@@ -1,8 +1,8 @@
-let itemUrl = "http://localhost:5165/item";
-let consignmentUrl = "http://localhost:5165/consignment";
-let transactionUrl = "http://localhost:5165/transaction";
-let adminUrl = "http://localhost:5165/admin";
-let customerUrl = "http://localhost:5165/Customer";
+itemUrl = "http://localhost:5165/item";
+consignmentUrl = "http://localhost:5165/consignment";
+transactionUrl = "http://localhost:5165/transaction";
+adminUrl = "http://localhost:5165/admin";
+customerUrl = "http://localhost:5165/Customer";
 
 function calculateConsignment() {
   const firstNameInput = document.getElementById('firstName').value;
@@ -22,27 +22,24 @@ function calculateConsignment() {
 function findPrice(type, qty) {
   let price = 0;
 
-  if (type === 'shirt') {
+  if (type === 'shirt' || type === 'pant' || type === 'skirt') {
     price = 5 * qty;
-  } else if (type === 'pant') {
-    price = 5 * qty;
-  } else if (type === 'skirt') {
-    price = 5 * qty;
-  } else if (type === 'dress') {
+  } else if (type === 'dress' || type === 'belt') {
     price = 7 * qty;
-  } else if (type === 'jacket') {
+  } else if (type === 'jacket' || type === 'shoe') {
     price = 10 * qty;
-  } else if (type === 'shoe') {
-    price = 10 * qty;
-  } else if (type === 'belt') {
-    price = 7 * qty;
   }
 
   return price;
 }
 
-document.getElementById('calculateButton').addEventListener('click', calculateConsignment);
+const calculateButton = document.getElementById('calculateConsignment');
 
+if (calculateButton) {
+  calculateButton.addEventListener('click', calculateConsignment);
+} else {
+  console.error('Error: Could not find calculateButton element');
+}
 
 
 // function AddAnotherItem()
