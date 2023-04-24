@@ -6,6 +6,7 @@ let customerUrl = "http://localhost:5165/api/customer"
 let transactionProfit = 0;
 let activeUser = JSON.parse(localStorage.getItem("activeUser"));
 let items = []
+let totalCostToUser = 0;
 
 function HandleOnLoad(){
   getItems();
@@ -125,6 +126,8 @@ function PlaceOrder(){
       });
       console.log(updatedItem)
 
+      totalCostToUser += updatedItem.price
+
       transactionProfit += item.profit;
 
       let transaction = {
@@ -152,6 +155,7 @@ function PlaceOrder(){
     });
 
   activeUser.cart = '';
+  activeUser.storeCredit = (activeUser.storeCredit - totalCostToUser)
   checkoutCart = [];
   localStorage.setItem('activeUser', JSON.stringify(activeUser))
 
