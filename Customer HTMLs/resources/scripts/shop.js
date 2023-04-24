@@ -1,7 +1,7 @@
 let consignmentUrl = "http://localhost:5165/consignment";
 let transactionUrl = "http://localhost:5165/transaction";
 let adminUrl = "http://localhost:5165/admin";
-let customerUrl = "http://localhost:5165/Customer";
+let customerUrl = "http://localhost:5165/api/Customer";
 let itemUrl = "http://localhost:5165/api/item";
 let items = [];
 let cart = [];
@@ -65,67 +65,70 @@ function renderItems() {
 function handleAddToCartClick(itemId) {
   console.log("made it to add to cart click");
   const activeUser = JSON.parse(localStorage.getItem("activeUser"));
-  console.log(activeUser);
+  console.log(activeUser)
 
   const addingItem = items.find((item) => item.itemId === itemId);
   console.log(addingItem);
 
+<<<<<<< HEAD
+=======
+  console.log(activeUser)
+
+>>>>>>> c559cf4ba0ad40a0d3fe3e40011ff2c37d93b753
   // Ensure activeUser.cart is an array
   if (!Array.isArray(activeUser.cart)) {
     activeUser.cart = [];
   }
 
+<<<<<<< HEAD
   activeUser.cart.push(String(addingItem.itemId));
   console.log(activeUser.cart);
   addingItem.stock = false;
+=======
+  activeUser.cart.push(addingItem.itemId);
+  console.log(activeUser.cart);
+>>>>>>> c559cf4ba0ad40a0d3fe3e40011ff2c37d93b753
   addingItem.inCart = true;
 
   console.log(activeUser);
-
-  // Update the Item in the API
+  // Add in Update Put for the Item
   fetch(`${itemUrl}/${addingItem.itemId}`, {
     method: "PUT",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(addingItem),
+    body: JSON.stringify(addingItem, addingItem.itemId),
   })
     .then((response) => {
       console.log(response);
-      return response.json();
-    })
-    .then((updatedItem) => {
-      console.log("Item update successful: ", updatedItem);
-
-      // Update the User in the API
-      return fetch(`${customerUrl}/${activeUser.customerId}`, {
-        method: "PUT",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(activeUser),
-      });
-    })
-    .then((response) => {
-      console.log(response);
-      return response.json();
-    })
-    .then((updatedUser) => {
-      console.log("User update successful: ", updatedUser);
-
-      // Update activeUser in localStorage
-      localStorage.setItem("activeUser", JSON.stringify(activeUser));
-
-      // Update the UI
-      renderItems();
+      location.reload();
     })
     .catch((error) => {
       console.log(error);
     });
 
+  // Convert activeUser.cart array to a string
+  activeUser.cart = activeUser.cart.join(',');
+
+  // add update for user
+  fetch(`${customerUrl}/${activeUser.customerId}`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(activeUser, activeUser.customerId),
+  })
+    .then((response) => {
+      console.log(response);
+      location.reload();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   console.log(cart);
 }
+
 
 
