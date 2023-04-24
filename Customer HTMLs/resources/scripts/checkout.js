@@ -3,106 +3,23 @@ let consignmentUrl = "http://localhost:5165/consignment"
 let transactionUrl = "http://localhost:5165/transaction"
 let adminUrl = "http://localhost:5165/admin"
 let customerUrl = "http://localhost:5165/customer"
-let checkoutCart = []
 let transactionProfit = 0;
-let transaction 
-
-let activeUser = JSON.parse(localStorage.getItem("activeUser"))
-
+let activeUser = JSON.parse(localStorage.getItem("activeUser"));
 
 function HandleOnLoad(){
-    loadCartItems()
-    SetUpUser()
-    
-}   
-
-function SetUpUser(){
-    activeUser = {
-        customerId: activeUser.customerId,
-        username: activeUser.username,
-        password: activeUser.password,
-        cart: activeUser.cart
-    }
-    
-}
-
-
-function HandleCheckCheckOutClick(){
-
-    let transactions = JSON.parse(localStorage.getItem("transactions")) ? JSON.parse(localStorage.getItem('transactions')) : []
-
-    checkoutCart.forEach((item) => {
-        item = {
-                itemId: item.itemId,
-                itemImageSrc: item.itemImageSrc,
-                price: item.price,
-                size: item.size,
-                stock: false,
-                value: item.value,
-                profit: item.profit,
-                inCart: true
-        }
-
-        fetch(`${itemUrl}, ${item.itemId}`, {
-            method: "PUT",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(item, item.itemId),
-        }).then((response) => {
-    
-                console.log(response);
-                location.reload()
-                location.reload()
-    
-            }).catch((error) => {
-    
-                console.log(error);
-    
-            });
-
-        transactionProfit += item.price
-
-    })
-
-    transaction = {
-        profit: transactionProfit,
-        customerId: activeUser.customerId
-    }
-
-    fetch(`${transactionUrl}`, {
-        method: "POST",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(transaction),
-    }).then((response) => {
-
-            console.log(response);
-            location.reload()
-            location.reload()
-
-        }).catch((error) => {
-
-            console.log(error);
-
-        });
-
-        
+    loadItems()
 }  
 
- function loadCartItems() {
+function loadItems() {
+    const cart = activeUser.cart
+    console.log(activeUser.cart)
+
     const cartItemsContainer = document.querySelector(".items-container");
     let innerHTML = "";
     let subtotal = 0;
 
     try {
-        // const response = await fetch(transactionUrl);
-        // const cartItems = await response.json();
-
-        checko.forEach((item) => {
+        cart.forEach((item) => {
             subtotal += item.price;
             if (item.inCart === true) {
               innerHTML += `
@@ -128,10 +45,110 @@ function HandleCheckCheckOutClick(){
         console.error("Error fetching cart items:", error);
     }
 }
-   
+
+
+//     // get reference to the shopping cart element
+//     const checkoutCart = document.getElementById('cart');
+
+//     // get reference to the checkout element
+//     const checkout = document.getElementById('checkout');
+
+//     // loop through each item in the shopping cart
+//     for (let i = 0; i < checkoutCart.children.length; i++) {
+//     // create a new checkout item element
+//     const checkoutItem = document.createElement('div');
+//     checkoutItem.classList.add('checkout-item');
+
+//     // copy over the item name and price from the shopping cart
+//     const itemName = checkoutCart.children[i].querySelector('.item-name').textContent;
+//     const itemPrice = checkoutCart.children[i].querySelector('.item-price').textContent;
+
+//     // create a new element for the item name and append it to the checkout item
+//     const itemNameElement = document.createElement('span');
+//     itemNameElement.classList.add('checkout-item-name');
+//     itemNameElement.textContent = itemName;
+//     checkoutItem.appendChild(itemNameElement);
+
+//     // create a new element for the item price and append it to the checkout item
+//     const itemPriceElement = document.createElement('span');
+//     itemPriceElement.classList.add('checkout-item-price');
+//     itemPriceElement.textContent = itemPrice;
+//     checkoutItem.appendChild(itemPriceElement);
+
+//     // append the checkout item to the checkout element
+//     checkout.appendChild(checkoutItem);
+// }
+
+
+
+// function HandleCheckCheckOutClick(){
+
+//     let transactions = JSON.parse(localStorage.getItem("transactions")) ? JSON.parse(localStorage.getItem('transactions')) : []
+
+//     checkoutCart.forEach((item) => {
+//         item = {
+//                 itemId: item.itemId,
+//                 itemImageSrc: item.itemImageSrc,
+//                 price: item.price,
+//                 size: item.size,
+//                 stock: false,
+//                 value: item.value,
+//                 profit: item.profit,
+//                 inCart: true
+//         }
+
+//         fetch(`${itemUrl}, ${item.itemId}`, {
+//             method: "PUT",
+//             headers: {
+//                 "Accept": "application/json",
+//                 "Content-Type": "application/json",
+//             },
+//             body: JSON.stringify(item, item.itemId),
+//         }).then((response) => {
     
+//                 console.log(response);
+//                 location.reload()
+//                 location.reload()
+    
+//             }).catch((error) => {
+    
+//                 console.log(error);
+    
+//             });
 
+//         transactionProfit += item.price
 
+//     })
+
+//     transaction = {
+//         profit: transactionProfit,
+//         customerId: activeUser.customerId
+//     }
+
+//     fetch(`${transactionUrl}`, {
+//         method: "POST",
+//         headers: {
+//             "Accept": "application/json",
+//             "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify(transaction),
+//     }).then((response) => {
+
+//             console.log(response);
+//             location.reload()
+//             location.reload()
+
+//         }).catch((error) => {
+
+//             console.log(error);
+
+//         });
+
+        
+// }  
+
+ 
+   
 
 // async function GetTransactions(){
 //     try{
