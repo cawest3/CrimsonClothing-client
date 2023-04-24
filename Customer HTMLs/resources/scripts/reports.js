@@ -47,7 +47,9 @@ function totalProfitReport(data){
 function totalItemsReport(data2){
     let totalItems = 0
     data2.forEach(data2 =>{
-        totalItems++
+        if(data2.stock == true){
+            totalItems++
+        }
     })
     console.log(totalItems)
     document.getElementById('totalItems').innerHTML = totalItems
