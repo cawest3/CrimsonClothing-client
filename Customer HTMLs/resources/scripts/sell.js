@@ -32,14 +32,32 @@ function findPrice(type, qty) {
   console.log(qty)
 
   if (type === 'shirt' || type === 'pant' || type === 'skirt') {
-    price = 5 * qty;
+    price = 5 * qty;
   } else if (type === 'dress' || type === 'belt') {
-    price = 7 * qty;
+    price = 7 * qty;
   } else if (type === 'jacket' || type === 'shoe') {
-    price = 10 * qty;
+    price = 10 * qty;
   }
   updateStoreCredit(price)
   return price;
+}
+
+function findCost(type, qty){
+    let cost = 0
+    console.log(cost)
+    console.log(type)
+    
+    if(type === 'shirt' || type === 'pant' || type === 'skirt'){
+        cost = 25 * qty
+    } else if(type === 'dress'){
+        cost = 30 * qty
+    } else if(type === 'belt'){
+        cost = 10 * qty
+    } else if(type === 'jacket' || type === 'shoe'){
+        cost = 35 * qty
+    }
+
+    return cost
 }
 
 const calculateButton = document.getElementById('calculateConsignment');
