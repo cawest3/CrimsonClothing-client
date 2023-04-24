@@ -10,9 +10,10 @@ let transaction
 let activeUser = JSON.parse(localStorage.getItem("activeUser"))
 
 
-function handleOnLoad(){
-    SetUpUser()
+function HandleOnLoad(){
     loadCartItems()
+    SetUpUser()
+    
 }   
 
 function SetUpUser(){
@@ -92,51 +93,41 @@ function HandleCheckCheckOutClick(){
         
 }  
 
-async function loadCartItems() {
-    const cartItemsContainer = document.querySelector(".col-lg-7");
-    const apiUrl = "http://localhost:5165/transaction"; // Replace with your API URL
-    window.addEventListener('load', handleOnLoad);
+ function loadCartItems() {
+    const cartItemsContainer = document.querySelector(".items-container");
+    let innerHTML = "";
+    
 
     let subtotal = 0;
 
     try {
-        const response = await fetch(apiUrl);
-        const cartItems = await response.json();
+        // const response = await fetch(transactionUrl);
+        // const cartItems = await response.json();
 
         cartItems.forEach((item) => {
             subtotal += item.price;
-            const cartItemHtml = `
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div class="d-flex flex-row align-items-center">
-                                <div>
-                                    <img src="${item.imageUrl}" class="img-fluid rounded-3" alt="Shopping item" style="width: 65px;">
-                                </div>
-                                <div class="ms-3">
-                                    <h5>${item.size}</h5>
-                                </div>
-                            </div>
-                            <div class="d-flex flex-row align-items-center">
-                                <div style="width: 80px;">
-                                    <h5 class="mb-0">$${item.price}</h5>
-                                </div>
-                                <a href="#!" style="color: #ec1414;"><i class="fas fa-trash-alt"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
+            if (item.inCart === true) {
+              innerHTML += `
+              <div class="col-md-4 order-md-2 mb-4">
+              <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted">Your cart</span>
+                <span class="badge badge-secondary badge-pill">3</span>
+              </h4>
+              <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                  <div>
+                    <h6 class="my-0">Product name</h6>
+                    <small class="text-muted">Item Name</small>
+                  </div>
+                  <span class="text-muted">$12</span>
+                </li>
+                </ul>
+              `;
+            }
+          });
+        cartItemsContainer.insertAdjacentHTML("beforeend", cartItemHtml);
 
-            cartItemsContainer.insertAdjacentHTML("beforeend", cartItemHtml);
-        });
-
-        const subtotalHtml = `
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <p>Subtotal</p>
-                <p class="mb-0">$${subtotal.toFixed(2)}</p>
-            </div>
-        `;
+        
 
         cartItemsContainer.insertAdjacentHTML("beforeend", subtotalHtml);
 
