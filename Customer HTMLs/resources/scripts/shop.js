@@ -64,19 +64,23 @@ function renderItems() {
 
 function handleAddToCartClick(itemId) {
   console.log("made it to add to cart click");
-  // const activeUser = JSON.parse(localStorage.getItem("activeUser"));
+  const activeUser = JSON.parse(localStorage.getItem("activeUser"));
   console.log(activeUser)
 
   const addingItem = items.find((item) => item.itemId === itemId);
   console.log(addingItem);
 
-  activeUser.cart.push(addingItem.itemId);
+  // Ensure activeUser.cart is an array
+  if (!Array.isArray(activeUser.cart)) {
+    activeUser.cart = [];
+  }
+
+  activeUser.cart.push(String(addingItem.itemId));
   console.log(activeUser.cart);
   addingItem.stock = false;
   addingItem.inCart = true;
 
   console.log(activeUser);
-
   // Add in Update Put for the Item
   fetch(`${itemUrl}/${addingItem.itemId}`, {
     method: "PUT",
@@ -110,4 +114,5 @@ function handleAddToCartClick(itemId) {
     .catch((error) => {
       console.log(error);
     });
+    console.log(cart);
 }
