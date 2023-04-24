@@ -1,14 +1,14 @@
-let itemUrl = "http://localhost:5165/item"
+let itemUrl = "http://localhost:5165/api/item"
 let consignmentUrl = "http://localhost:5165/consignment"
 let transactionUrl = "http://localhost:5165/transaction"
 let adminUrl = "http://localhost:5165/admin"
 let customerUrl = "http://localhost:5165/customer"
 let transactionProfit = 0;
 let activeUser = JSON.parse(localStorage.getItem("activeUser"));
+let items = []
 
 function HandleOnLoad(){
   getItems();
-  MatchCart();
   loadItems();
 }  
 
@@ -21,13 +21,13 @@ async function getItems() {
     localStorage.setItem("items", JSON.stringify(data));
     items = data;
     console.log(data);
-  } catch (error) {
-    console.log(error);
+  } catch {
+    console.log(error)
   }
 }
 
 
-function MatchCart(){
+function loadItems() {
 
   const cart = activeUser.cart
   console.log(activeUser.cart)
@@ -38,19 +38,20 @@ function MatchCart(){
       // If activeUser.cart is already an array, do nothing
     }
 
+    console.log("in render");
+    items = JSON.parse(localStorage.getItem("items"));
+    console.log(items);
+
     const checkoutCart = [];
     items.forEach(item => {
-      const matchingItems = cart.filter((cartItem) => cartItem.itemId === item.itemId);
+      const matchingItems = items.filter((item) => cart.itemId === item.itemId);
       checkoutCart.push(...matchingItems);
       console.log(checkoutCart);
       console.log(item);
     });
-    
-}
 
-function loadItems(itemId) {
-
-    const cartItemsContainer = document.querySelector(".items-container");
+    console.log(checkoutCart)
+    const cartItemsContainer = document.querySelector("itemContainer");
     let innerHTML = "";
     let subtotal = 0;
 
@@ -77,8 +78,8 @@ function loadItems(itemId) {
             }
           });
         cartItemsContainer.innerHTML = innerHTML;
-    } catch (error) {
-        console.error("Error fetching cart items:", error);
+    } catch {
+        console.log("error");
     }
 }
 
