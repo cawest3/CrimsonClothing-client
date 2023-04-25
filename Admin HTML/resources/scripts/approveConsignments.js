@@ -48,6 +48,7 @@ function renderItems() {
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                   <button type="button" class="btn btn-sm btn-outline-secondary edit-item-btn" onclick="ApproveButton(${item.itemId})" data-item-id="${item.itemId}">Approve</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary delete-item-btn" onclick="DeleteButton(${item.itemId})" data-item-id="${item.itemId}">Delete Item</button>
                 </div>
                 <small class="text-body-secondary">$${item.price}</small>
               </div>
@@ -89,4 +90,16 @@ function PutItem(item, itemId){
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  function DeleteButton(itemId){
+    console.log("In Delete Button")
+  
+      let temp = items.find((item) => item.itemId == itemId)
+      console.log(temp)
+      temp.stock = false;
+  
+      console.log(temp)
+  
+      PutItem(temp, itemId)
   }
