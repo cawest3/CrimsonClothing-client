@@ -39,7 +39,7 @@ function renderItems() {
   console.log(items);
 
   items.forEach((item) => {
-    if (item.stock === true) {
+    if (item.stock === true && item.approved == true) {
       innerHTML += `
         <div class="col">
           <div class="card shadow-sm">
