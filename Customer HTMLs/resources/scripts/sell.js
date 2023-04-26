@@ -108,56 +108,73 @@ function updateStoreCredit(price) {
 });
 }
 
-function createConsignmentItem(cost, price){
-    let activeUser = JSON.parse(localStorage.getItem("activeUser"))
+function createConsignmentItem(cost, price) {
+    let activeUser = JSON.parse(localStorage.getItem("activeUser"));
     let newItem = {
-        itemImageSrc: document.getElementById('pictureUpload').value,
-        price: price,
-        size: document.getElementById('sizeInput').value,
-        stock: true,
-        cost: cost,
-        profit: price - cost,
-        inCart: false,
-        consignmentId: 0,
-        itemName: document.getElementById('nameInput').value
-    }
-    console.log(newItem)
+      itemImageSrc: document.getElementById("pictureUpload").value,
+      price: price,
+      size: document.getElementById("sizeInput").value,
+      stock: true,
+      cost: cost,
+      profit: price - cost,
+      inCart: false,
+      consignmentId: 0,
+      itemName: document.getElementById("nameInput").value,
+    };
+    console.log(newItem);
     let newConsignment = {
-        customerId: activeUser.customerId,
-        price: price,
-        cost: cost,
-        profit: price - cost,
-        consignmentImageSrc: document.getElementById('pictureUpload').value
-    }
-    console.log(newConsignment)
-    fetch(itemUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newItem)
-    })
-    .then(response => {
-        if(!response.ok){
-            throw new Error(`HTTP error! status: ${response.status}`)
-        }
-        console.log(`Item ${itemId} updated successfully.`)
-    })
-
+      customerId: activeUser.customerId,
+      price: price,
+      cost: cost,
+      profit: price - cost,
+      consignmentImageSrc: document.getElementById("pictureUpload").value,
+    };
+    console.log(newConsignment);
+  
+    // Swap the order of the Consignment and Item POSTs
     fetch(consignmentUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newConsignment)
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newConsignment),
     })
-    .then(response => {
-        if(!response.ok){
-            throw new Error(`HTTP error! status: ${response.status}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
-        console.log(`Consignment ${consignmentId} updated successfully.`)
-    })
-}
+        console.log(`Consignment updated successfully.`);
+        // Fetch the list of consignments
+        return fetch(consignmentUrl);
+      })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        // Parse the response JSON and get the last consignment
+        return response.json();
+      })
+      .then((consignments) => {
+        let lastConsignment = consignments[consignments.length - 1];
+        // Set the consignmentId of the newItem to the id of the last consignment
+        newItem.consignmentId = lastConsignment.consignmentId;
+        // POST the newItem to the API
+        return fetch(itemUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newItem),
+        });
+      })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        console.log(`Item updated successfully.`);
+      });
+  }
+  
 
     // .then(response => {
     //   if (!response.ok) {
