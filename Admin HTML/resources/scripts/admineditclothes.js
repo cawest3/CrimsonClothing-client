@@ -352,7 +352,7 @@ function AddAdminUser() {
           
             // Get input values
             const newUsername = document.getElementById("ausername").value;
-            const newPassword = document.getElementById("ausername").value;
+            const newPassword = document.getElementById("apassword").value;
           
             // Add new item to inventory
             const newAdminLogin = { 
